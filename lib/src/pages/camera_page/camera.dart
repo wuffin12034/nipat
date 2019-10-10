@@ -23,27 +23,28 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Constant.CAMERA),
-        centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
-      ),
-      body: Column(children: <Widget>[
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 200.0,
-          child: Center(
-            child: _image == null
-                ? Text('No image selected.')
-                : Image.file(_image),
-          ),
+        appBar: AppBar(
+          title: Text(Constant.CAMERA),
+          centerTitle: true,
+          backgroundColor: Constant.BG_COLOR,
         ),
-        FloatingActionButton(
-          onPressed: getImageFromCam,
-          tooltip: 'Pick Image',
-          child: Icon(Icons.add_a_photo),
-        ),
-      ],)
-    );
+        body: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200.0,
+              child: Center(
+                child: _image == null
+                    ? Text('No image selected.')
+                    : Image.file(_image),
+              ),
+            ),
+            FloatingActionButton(
+              onPressed: getImageFromCam,
+              tooltip: 'Pick Image',
+              child: Icon(Icons.add_a_photo),
+            ),
+          ],
+        ));
   }
 }

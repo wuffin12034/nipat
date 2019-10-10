@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Constant {
-
   static const String APP_NAME = 'More Feature';
   static const String PROFILE = 'Profile';
   static const String CAMERA = 'Camera';
@@ -27,4 +26,3 @@ class Constant {
 //  #7a9e69 green
 //  #7997c9 blue
 }
-
