@@ -43,10 +43,15 @@ class _InsertDataPageState extends State<InsertDataPage> {
     return downloadUrl;
   }
 
-  void _submitForm() {
+  Future<Null> _submitForm() async {
     final FormState form = _formKey.currentState;
     form.save();
     print(newStudent.firstName);
+    var imageUrl =
+        await _onImageUploader(_image, newStudent.identificationNumber);
+    print(imageUrl);
+    //convert all data to json
+    //uploading to cloude firestore collection
   }
 
   @override
@@ -93,16 +98,17 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     ),
                     buildSizedBox(),
                     TextFormField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(),
-                        hintText: 'กรุณาป้อนรหัสนักศึกษา',
+                        decoration: new InputDecoration(
+                          border: new OutlineInputBorder(),
+                          hintText: 'กรุณาป้อนรหัสนักศึกษา',
 //              helperText: 'Keep it short, this is just a demo.',
-                        labelText: 'รหัสนักศึกษา',
-                        prefixIcon: const Icon(
-                          Icons.person,
+                          labelText: 'รหัสนักศึกษา',
+                          prefixIcon: const Icon(
+                            Icons.person,
+                          ),
                         ),
-                      ),
-                    ),
+                        onSaved: (val) =>
+                            newStudent.identificationNumber = val),
                     buildSizedBox(),
                     TextFormField(
                       decoration: new InputDecoration(
