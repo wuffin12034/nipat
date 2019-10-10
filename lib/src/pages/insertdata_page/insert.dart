@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../models/student.dart';
+// import '../../services/student_services.dart';
 
 class InsertDataPage extends StatefulWidget {
   @override
@@ -47,11 +48,16 @@ class _InsertDataPageState extends State<InsertDataPage> {
     final FormState form = _formKey.currentState;
     form.save();
     print(newStudent.firstName);
+    print(newStudent.lastName);
+    // print(newStudent.faculty);
+    // print(newStudent.department);
+    // print(newStudent.year);
+    print(newStudent);
+
     var imageUrl =
         await _onImageUploader(_image, newStudent.identificationNumber);
     print(imageUrl);
-    //convert all data to json
-    //uploading to cloude firestore collection
+   Firestore.instance.collection('student').document().setData({"firstName": newStudent.firstName, "lastName":newStudent.lastName});
   }
 
   @override
@@ -95,6 +101,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                           Icons.person,
                         ),
                       ),
+                      onSaved: (val) => newStudent.lastName = val,
                     ),
                     buildSizedBox(),
                     TextFormField(
@@ -108,7 +115,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                           ),
                         ),
                         onSaved: (val) =>
-                            newStudent.identificationNumber = val),
+                            newStudent.identificationNumber = val,),
                     buildSizedBox(),
                     TextFormField(
                       decoration: new InputDecoration(
@@ -120,7 +127,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
                           Icons.person,
                         ),
                       ),
-                    ),
+                      
+                    onSaved: (val) =>
+                            newStudent.faculty = val,),
                     buildSizedBox(),
                     TextFormField(
                       decoration: new InputDecoration(
@@ -132,6 +141,8 @@ class _InsertDataPageState extends State<InsertDataPage> {
                           Icons.person,
                         ),
                       ),
+                      onSaved: (val) =>
+                            newStudent.department = val,
                     ),
                     buildSizedBox(),
                     TextFormField(
@@ -144,6 +155,8 @@ class _InsertDataPageState extends State<InsertDataPage> {
                           Icons.person,
                         ),
                       ),
+                      onSaved: (val) =>
+                            newStudent.year = val,
                     ),
                     buildSizedBox(),
                     Row(
