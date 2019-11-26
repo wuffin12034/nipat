@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "896510291354",
+    "firebase_url": "https://wuffin-8baa8.firebaseio.com",
+    "project_id": "wuffin-8baa8",
+    "storage_bucket": "wuffin-8baa8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896510291354:android:97a19ca9efaaa68c455e23",
+        "android_client_info": {
+          "package_name": "com.example.nipat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896510291354-ri5v8uat4ump2efmhh86vvsgae9dgamo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGWaIirOPSYxM6QE4mJ_-QdtWcnZtSlcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896510291354-ri5v8uat4ump2efmhh86vvsgae9dgamo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
