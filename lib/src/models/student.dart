@@ -6,4 +6,5 @@ class Student {
   String department;
   String year;
   String imageUrl;
+  String sec;
 }

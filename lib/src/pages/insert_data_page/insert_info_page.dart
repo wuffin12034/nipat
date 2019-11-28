@@ -17,8 +17,8 @@ class _InsertDataPageState extends State<InsertDataPage> {
   void _submitForm() async {
     final FormState form = _formKey.currentState;
     form.save();
-    print(newStudent.firstName);
-    print(newStudent.lastName);
+    // print(newStudent.firstName);
+    // print(newStudent.lastName);
     // print(newStudent.faculty);
     // print(newStudent.department);
     // print(newStudent.year);
@@ -27,6 +27,11 @@ class _InsertDataPageState extends State<InsertDataPage> {
         await Firestore.instance.collection('students').add({
       "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
+      "identificationNumber":newStudent.identificationNumber,
+      "faculty":newStudent.faculty,
+      "department":newStudent.department,
+      "year":newStudent.year,
+      "set":newStudent.sec,
       "state": "AWAITING_FOR_IMAGE",
       "createdAt": '', //DATE,
       "updatedAt": '', //DATE,
@@ -35,7 +40,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return InsertImagePage(
         docID: docRef.documentID,
-        studentID: '59xxxxxxx',
+        studentID: '',
       );
     }));
   }
