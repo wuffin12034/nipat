@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../models/student.dart';
+import '../insertdata_page/insert2.dart';
 // import '../../services/student_services.dart';
 
 class InsertDataPage extends StatefulWidget {
@@ -19,21 +20,21 @@ class _InsertDataPageState extends State<InsertDataPage> {
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  Future getImageFromCam() async {
-    // for camera
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
-    });
-  }
+  // Future getImageFromCam() async {
+  //   // for camera
+  //   var image = await ImagePicker.pickImage(source: ImageSource.camera);
+  //   setState(() {
+  //     _image = image;
+  //   });
+  // }
 
-  Future getImageFromGallery() async {
-    // for gallery
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
-    });
-  }
+  // Future getImageFromGallery() async {
+  //   // for gallery
+  //   var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     _image = image;
+  //   });
+  // }
 
   Future<String> _onImageUploader(File imagePath, String studentId) async {
     final StorageReference firebaseStorageRef =
@@ -159,23 +160,23 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     buildSizedBox(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-//                      width: MediaQuery.of(context).size.width,
-                          height: 100.0,
-                          width: 274.0,  //ตตั้งหน้าจอเคริ่องมุก 274จะไม่เกิน
-                          child: Center(
-                            child: _image == null
-                                ? Text('กรุณาเลือกรูปภาพ')
-                                : Image.file(_image),
-                          ),
-                        ),
-                        FloatingActionButton(
-                          onPressed: getImageFromCam,
-                          tooltip: 'Pick Image',
-                          child: Icon(Icons.add_a_photo),
-                        ),
-                      ],
+//                       children: [
+//                         Container(
+// //                      width: MediaQuery.of(context).size.width,
+//                           height: 100.0,
+//                           width: 274.0,  //การตั้งค่าปุ่ม
+//                           child: Center(
+//                             child: _image == null
+//                                 ? Text('กรุณาเลือกรูปภาพ')
+//                                 : Image.file(_image),
+//                           ),
+//                         ),
+//                         FloatingActionButton(
+//                           onPressed: getImageFromCam,
+//                           tooltip: 'Pick Image',
+//                           child: Icon(Icons.add_a_photo),
+//                         ),
+//                       ],
                     ),
                     buildSizedBox(),
                     Container(
