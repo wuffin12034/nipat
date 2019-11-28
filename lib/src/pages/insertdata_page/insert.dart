@@ -163,7 +163,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                         Container(
 //                      width: MediaQuery.of(context).size.width,
                           height: 100.0,
-                          width: 300.0,
+                          width: 274.0,  //ตตั้งหน้าจอเคริ่องมุก 274จะไม่เกิน
                           child: Center(
                             child: _image == null
                                 ? Text('กรุณาเลือกรูปภาพ')
