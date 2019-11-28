@@ -57,8 +57,11 @@ class _InsertDataPageState extends State<InsertDataPage> {
     var imageUrl =
         await _onImageUploader(_image, newStudent.identificationNumber);
     print(imageUrl);
-    Firestore.instance.collection('student').document().setData(
-        {"firstName": newStudent.firstName, "lastName": newStudent.lastName});
+    Firestore.instance.collection('students').document().setData({
+      "firstName": newStudent.firstName,
+      "lastName": newStudent.lastName,
+      "image": imageUrl
+    });
   }
 
   @override
@@ -80,10 +83,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TextFormField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนชื่อ',
-//              helperText: 'Keep it short, this is just a demo.',
                         labelText: 'ชื่อ',
                         prefixIcon: const Icon(
                           Icons.person,
@@ -93,10 +95,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     ),
                     buildSizedBox(),
                     TextFormField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนนามสุล',
-//              helperText: 'Keep it short, this is just a demo.',
                         labelText: 'นามสกุล',
                         prefixIcon: const Icon(
                           Icons.person,
@@ -106,10 +107,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     ),
                     buildSizedBox(),
                     TextFormField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนรหัสนักศึกษา',
-//              helperText: 'Keep it short, this is just a demo.',
                         labelText: 'รหัสนักศึกษา',
                         prefixIcon: const Icon(
                           Icons.person,
@@ -119,10 +119,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     ),
                     buildSizedBox(),
                     TextFormField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนสาขาวิชา',
-//              helperText: 'Keep it short, this is just a demo.',
                         labelText: 'สาขาวิชา',
                         prefixIcon: const Icon(
                           Icons.person,
@@ -132,10 +131,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     ),
                     buildSizedBox(),
                     TextFormField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนคณะ',
-//              helperText: 'Keep it short, this is just a demo.',
                         labelText: 'คณะ',
                         prefixIcon: const Icon(
                           Icons.person,
@@ -145,10 +143,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     ),
                     buildSizedBox(),
                     TextFormField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนชั้นปี',
-//              helperText: 'Keep it short, this is just a demo.',
                         labelText: 'ชั้นปี',
                         prefixIcon: const Icon(
                           Icons.person,
@@ -161,7 +158,6 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-//                      width: MediaQuery.of(context).size.width,
                           height: 100.0,
                           width: 300.0,
                           child: Center(
@@ -184,7 +180,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       child: RaisedButton(
                         color: Constant.BG_COLOR,
                         shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
                           "ยืนยัน",
