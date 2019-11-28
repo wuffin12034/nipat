@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nipat/src/utils/constant.dart';
-import 'dart:async';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+import '../../utils/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import '../../models/student.dart';
-// import '../../services/student_services.dart';
+import './insert_image_page.dart';
 
 class InsertDataPage extends StatefulWidget {
   @override
@@ -14,37 +10,11 @@ class InsertDataPage extends StatefulWidget {
 }
 
 class _InsertDataPageState extends State<InsertDataPage> {
-  File _image;
   Student newStudent = new Student();
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  Future getImageFromCam() async {
-    // for camera
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
-    });
-  }
-
-  Future getImageFromGallery() async {
-    // for gallery
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
-    });
-  }
-
-  Future<String> _onImageUploader(File imagePath, String studentId) async {
-    final StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('${studentId}.png');
-    final StorageUploadTask task = firebaseStorageRef.putFile(imagePath);
-    StorageTaskSnapshot storageTaskSnapshot = await task.onComplete;
-    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
-    return downloadUrl;
-  }
-
-  Future<Null> _submitForm() async {
+  void _submitForm() async {
     final FormState form = _formKey.currentState;
     form.save();
     print(newStudent.firstName);
@@ -52,16 +22,22 @@ class _InsertDataPageState extends State<InsertDataPage> {
     // print(newStudent.faculty);
     // print(newStudent.department);
     // print(newStudent.year);
-    print(newStudent);
 
-    var imageUrl =
-        await _onImageUploader(_image, newStudent.identificationNumber);
-    print(imageUrl);
-    Firestore.instance.collection('students').document().setData({
+    DocumentReference docRef =
+        await Firestore.instance.collection('students').add({
       "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
-      "image": imageUrl
+      "state": "AWAITING_FOR_IMAGE",
+      "createdAt": '', //DATE,
+      "updatedAt": '', //DATE,
     });
+    print(docRef.documentID);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return InsertImagePage(
+        docID: docRef.documentID,
+        studentID: '59xxxxxxx',
+      );
+    }));
   }
 
   @override
@@ -154,43 +130,24 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       onSaved: (val) => newStudent.year = val,
                     ),
                     buildSizedBox(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 100.0,
-                          width: 300.0,
-                          child: Center(
-                            child: _image == null
-                                ? Text('กรุณาเลือกรูปภาพ')
-                                : Image.file(_image),
-                          ),
-                        ),
-                        FloatingActionButton(
-                          onPressed: getImageFromCam,
-                          tooltip: 'Pick Image',
-                          child: Icon(Icons.add_a_photo),
-                        ),
-                      ],
-                    ),
-                    buildSizedBox(),
                     Container(
                       height: 50,
                       width: double.infinity,
                       child: RaisedButton(
-                        color: Constant.BG_COLOR,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          "ยืนยัน",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: _submitForm,
-                      ),
+                          color: Constant.BG_COLOR,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            "ยืนยัน",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            _submitForm();
+                          }),
                     ),
                   ],
                 ),
