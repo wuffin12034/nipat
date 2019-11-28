@@ -14,6 +14,13 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text(Constant.PROFILE),
         centerTitle: true,
         backgroundColor: Constant.BG_COLOR,
+        actions: <Widget>[
+           new IconButton(
+        icon: new Icon(Icons.add),
+        onPressed: () => print("IconButton Add")),
+        
+        
+        ],
       ),
     );
   }

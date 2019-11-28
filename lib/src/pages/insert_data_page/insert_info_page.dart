@@ -135,6 +135,18 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       onSaved: (val) => newStudent.year = val,
                     ),
                     buildSizedBox(),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'กรุณาป้อนหมู่เรียน',
+                        labelText: 'หมู่เรียน',
+                        prefixIcon: const Icon(
+                          Icons.person,
+                        ),
+                      ),
+                      onSaved: (val) => newStudent.sec = val,
+                    ),
+                    buildSizedBox(),
                     Container(
                       height: 50,
                       width: double.infinity,
