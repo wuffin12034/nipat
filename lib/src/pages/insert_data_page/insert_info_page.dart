@@ -27,11 +27,11 @@ class _InsertDataPageState extends State<InsertDataPage> {
         await Firestore.instance.collection('students').add({
       "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
-      "identificationNumber":newStudent.identificationNumber,
-      "faculty":newStudent.faculty,
-      "department":newStudent.department,
-      "year":newStudent.year,
-      "set":newStudent.sec,
+      "identificationNumber": newStudent.identificationNumber,
+      "faculty": newStudent.faculty,
+      "department": newStudent.department,
+      "year": newStudent.year,
+      "set": newStudent.sec,
       "state": "AWAITING_FOR_IMAGE",
       "createdAt": '', //DATE,
       "updatedAt": '', //DATE,
@@ -174,7 +174,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
         ));
   }
 
-  SizedBox buildSizedBox() {
+  Widget buildSizedBox() {
     return SizedBox(
       height: 13,
     );
