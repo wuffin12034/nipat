@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nipat/src/pages/home_page/home_page.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'dart:async';
 import 'dart:io';
@@ -51,16 +52,19 @@ class _InsertImagePageState extends State<InsertImagePage> {
 
   void _submitForm() async {
     String _imageUrl = await _onImageUploader(_image, widget.studentID);
+
+
     if (_imageUrl != null) {
       await Firestore.instance
           .collection('students')
           .document(widget.docID)
           .updateData({
-        "image": [_imageUrl],
+        "image": _imageUrl,
       });
-      // pop
     }
-    //
+       Navigator.push(context, MaterialPageRoute(builder: (context){
+                return HomePage();
+   }));
   }
 
   Widget build(BuildContext context) {
@@ -68,37 +72,41 @@ class _InsertImagePageState extends State<InsertImagePage> {
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        // backgroundColor: Constant.BG_COLOR,
       ),
-      body: Form(
-        key: _formKey,
-        autovalidate: true,
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-//                      width: MediaQuery.of(context).size.width,
-                    height: 100.0,
-                    width: 274.0, //การตั้งค่าปุ่ม
-                    child: Center(
-                      child: _image == null
-                          ? Text('กรุณาเลือกรูปภาพ')
-                          : Image.file(_image),
+      body: Center(
+        child: Form(
+          key: _formKey,
+          autovalidate: true,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 100.0,
+                          width: 274.0, //การตั้งค่าปุ่ม
+                          child: Center(
+                            child: _image == null
+                                ? Text('กรุณาเลือกรูปภาพ')
+                                : Image.file(_image),
+                          ),
+                        ),
+                        RaisedButton(
+                          onPressed: getImageFromCam,
+                          child: Icon(Icons.add_a_photo),
+                        ),
+                      ],
                     ),
                   ),
-                  FloatingActionButton(
-                    onPressed: getImageFromCam,
-                    tooltip: 'Pick Image',
-                    child: Icon(Icons.add_a_photo),
-                  ),
-                ],
-              ),
+                )
+              ],
             ),
-          ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

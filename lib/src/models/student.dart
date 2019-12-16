@@ -6,5 +6,13 @@ class Student {
   String department;
   String year;
   String imageUrl;
-  String sec;
+  String sets;
+  Student({this.identificationNumber,this.firstName,this.sets});
+  factory Student.fromJSON(Map<String, dynamic> json) {
+    return Student(
+        identificationNumber: json[' identificationNumber'],
+        firstName: json['firstName'],
+        sets: json['sets']);
+
+  }
 }

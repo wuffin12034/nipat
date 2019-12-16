@@ -14,7 +14,6 @@ class _ReportPageState extends State<ReportPage> {
         title: Text(Constant.REPORT),
         centerTitle: true,
         backgroundColor: Constant.BG_COLOR,
-        
       ),
     );
   }

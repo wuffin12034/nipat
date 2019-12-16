@@ -6,6 +6,8 @@ class Constant {
   static const String CAMERA = 'Camera';
   static const String REPORT = 'Report';
   static const String INSERT = 'InsertDataStusent';
+  
+  
 
   //routes
   static const String HOME_ROUTE = '/home';
