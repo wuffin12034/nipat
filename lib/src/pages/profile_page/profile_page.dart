@@ -15,7 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: true,
         backgroundColor: Constant.BG_COLOR,
         actions: <Widget>[
-          new IconButton(
+          IconButton(
               icon: Icon(Icons.add), onPressed: () => print("IconButton Add")),
         ],
       ),

@@ -3,6 +3,7 @@ import '../../utils/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/student.dart';
 import './insert_image_page.dart';
+import '../../widgets/widgets.dart';
 
 class InsertDataPage extends StatefulWidget {
   @override
@@ -17,11 +18,6 @@ class _InsertDataPageState extends State<InsertDataPage> {
   void _submitForm() async {
     final FormState form = _formKey.currentState;
     form.save();
-    // print(newStudent.firstName);
-    // print(newStudent.lastName);
-    // print(newStudent.faculty);
-    // print(newStudent.department);
-    // print(newStudent.year);
 
     DocumentReference docRef =
         await Firestore.instance.collection('students').add({
@@ -31,18 +27,23 @@ class _InsertDataPageState extends State<InsertDataPage> {
       "faculty": newStudent.faculty,
       "department": newStudent.department,
       "year": newStudent.year,
-      "set": newStudent.sec,
       "state": "AWAITING_FOR_IMAGE",
       "createdAt": '', //DATE,
       "updatedAt": '', //DATE,
     });
-    print(docRef.documentID);
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return InsertImagePage(
-        docID: docRef.documentID,
-        studentID: '',
-      );
-    }));
+
+    print(docRef);
+
+    if (docRef != null) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return InsertImagePage(
+          docID: docRef.documentID,
+          studentID: newStudent.identificationNumber,
+        );
+      }));
+    } else {
+      print('error');
+    }
   }
 
   @override
@@ -74,7 +75,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       ),
                       onSaved: (val) => newStudent.firstName = val,
                     ),
-                    buildSizedBox(),
+                    buildSizedBox(13.0),
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -86,7 +87,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       ),
                       onSaved: (val) => newStudent.lastName = val,
                     ),
-                    buildSizedBox(),
+                    buildSizedBox(13.0),
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -98,7 +99,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       ),
                       onSaved: (val) => newStudent.identificationNumber = val,
                     ),
-                    buildSizedBox(),
+                    buildSizedBox(13.0),
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -110,7 +111,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       ),
                       onSaved: (val) => newStudent.faculty = val,
                     ),
-                    buildSizedBox(),
+                    buildSizedBox(13.0),
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -122,7 +123,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       ),
                       onSaved: (val) => newStudent.department = val,
                     ),
-                    buildSizedBox(),
+                    buildSizedBox(13.0),
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -134,19 +135,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       ),
                       onSaved: (val) => newStudent.year = val,
                     ),
-                    buildSizedBox(),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'กรุณาป้อนหมู่เรียน',
-                        labelText: 'หมู่เรียน',
-                        prefixIcon: const Icon(
-                          Icons.person,
-                        ),
-                      ),
-                      onSaved: (val) => newStudent.sec = val,
-                    ),
-                    buildSizedBox(),
+                    buildSizedBox(13.0),
                     Container(
                       height: 50,
                       width: double.infinity,
@@ -172,11 +161,5 @@ class _InsertDataPageState extends State<InsertDataPage> {
             ],
           ),
         ));
-  }
-
-  Widget buildSizedBox() {
-    return SizedBox(
-      height: 13,
-    );
   }
 }
