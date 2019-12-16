@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     Constant.CAMERA_ROUTE: (context) => CameraPage(),
     Constant.REPORT_ROUTE: (context) => ReportPage(),
     Constant.INSERT_ROUTE: (context) => InsertDataPage(),
+   
   };
 
   @override

@@ -40,7 +40,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return InsertImagePage(
         docID: docRef.documentID,
-        studentID: '',
+        studentID: '123124',
       );
     }));
   }

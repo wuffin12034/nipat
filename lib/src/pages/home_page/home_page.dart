@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(width: 30),
                         Text(
-                          "Add more SKUs",
+                          "การแสดงหมู่เรียน",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(width: 30),
                         Text(
-                          "Multi branchs Control",
+                          "กล้อง",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                         Icon(Icons.cloud_queue, size: 70, color: Colors.white),
                         SizedBox(width: 30),
                         Text(
-                          "Cloud based Backup",
+                          "ตรวจสอบข้อมูล",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                             size: 70, color: Colors.white),
                         SizedBox(width: 30),
                         Text(
-                          "Data Student",
+                          "เพิ่งข้อมูล",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Constant {
-  static const String APP_NAME = 'More Feature';
+  static const String APP_NAME = 'การสแกนใบหน้า';
   static const String PROFILE = 'Profile';
   static const String CAMERA = 'Camera';
   static const String REPORT = 'Report';
