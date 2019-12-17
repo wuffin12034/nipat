@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nipat/src/pages/home_page/home_page.dart';
 import 'package:nipat/src/utils/constant.dart';
 import '../../models/sec.dart';
 import '../../widgets/widgets.dart';
@@ -19,10 +20,14 @@ class InsertsecPage extends StatefulWidget{
     DocumentReference docRef =
         await Firestore.instance.collection('Sec').add({
       "numbersec": newSec.numbersec,
+      
     
     });
 
     print(docRef);
+         Navigator.push(context, MaterialPageRoute(builder: (context){
+                return HomePage();
+   }));
   }
 
   @override
