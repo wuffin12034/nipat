@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nipat/src/models/student.dart';
 import 'package:nipat/src/pages/profile_page/insertsecPage.dart';
+import 'package:nipat/src/pages/profile_page/insertsec_student.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:nipat/src/widgets/Service/AlogoliaService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -57,19 +58,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: Colors.black,
                       ),
                       
-                      // onTap: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) =>ProfilePage(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>InsertsecStudentPage(
                                   
                                   
-                      //             districtName: document['name'],
+                                  numbersec: document['numbersec'],
                                   
-                      //           ),
-                      //     ),
-                      //   );
-                      // },
+                                ),
+                          ),
+                        );
+                      },
                     );
                   }).toList(),
                 );
@@ -128,10 +129,12 @@ class DataSearch extends SearchDelegate<String> {
                             child: Text(
                               student.firstName,
                               style: TextStyle(fontSize: 18.0),
+                              
                             )),
                       ]),
                     ],
                   ),
+                  
                 ),
                 onTap: (){
                   Navigator.push(context,MaterialPageRoute(builder: (context)=>ProfilePage(

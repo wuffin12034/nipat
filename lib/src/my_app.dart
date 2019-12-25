@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     Constant.HOME_ROUTE: (context) => HomePage(),
     Constant.PROFILE_ROUTE: (context) => ProfilePage(),
     Constant.CAMERA_ROUTE: (context) => CameraPage(),
-    Constant.REPORT_ROUTE: (context) => ReportPage(),
+    // Constant.REPORT_ROUTE: (context) => ReprotPage(),
     Constant.INSERT_ROUTE: (context) => InsertDataPage(),
    
   };

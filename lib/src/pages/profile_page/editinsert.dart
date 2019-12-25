@@ -2,28 +2,31 @@ import 'package:flutter/material.dart';
 import '../../utils/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/student.dart';
-import './insert_image_page.dart';
 import '../../widgets/widgets.dart';
 import '../../widgets/Service/AlogoliaService.dart';
 
-class InsertDataPage extends StatefulWidget {
+class EditinsertPage extends StatefulWidget {
   @override
-  _InsertDataPageState createState() => _InsertDataPageState();
+  EditinsertPage({Key key,
+  this.docID,
+  })
+  :super(key:key);
+  final String docID;
+ 
+  _EditinsertPageState createState() => _EditinsertPageState();
 }
 
-class _InsertDataPageState extends State<InsertDataPage> {
+class _EditinsertPageState extends State<EditinsertPage> {
   Student newStudent = new Student();
-   final algoliaService = AlogoliaService.instance;
-
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   void _submitForm() async {
+    final algoliaService = AlogoliaService.instance;
     final FormState form = _formKey.currentState;
     form.save();
-
     
-     Map<String,dynamic> addData={
+ Map<String,dynamic> upData={
         "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
       "identificationNumber": newStudent.identificationNumber,
@@ -36,27 +39,29 @@ class _InsertDataPageState extends State<InsertDataPage> {
       "updatedAt": '', //DATE,
 
      };
-     DocumentReference docRef =
-        await Firestore.instance.collection('students').add(addData);
-  
-   
-
-    print(docRef);
-
-    if (docRef != null) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return InsertImagePage(
-          docID: docRef.documentID,
-          studentID: newStudent.identificationNumber,
-        );
-      }));
-    } else {
-      print('error');
-    }
     
-     await algoliaService.performAddStudentsObject(addData);
-     
-  }
+    await Firestore.instance
+    .collection('students')
+    .document(widget.docID)
+    .updateData(
+    upData
+    );
+   await algoliaService.performUpdateStudentsObject( upData);
+    Navigator.pop(context);
+    }
+    //     await Firestore.instance.collection('students').add({
+    //   "firstName": newStudent.firstName,
+    //   "lastName": newStudent.lastName,
+    //   "identificationNumber": newStudent.identificationNumber,
+    //   "faculty": newStudent.faculty,
+    //   "department": newStudent.department,
+    //   "year": newStudent.year,
+    //   "state": "AWAITING_FOR_IMAGE",
+    //   "set":newStudent.sets,
+    //   "createdAt": '', //DATE,
+    //   "updatedAt": '', //DATE,
+    // });
+
 
 
   @override
@@ -187,6 +192,4 @@ class _InsertDataPageState extends State<InsertDataPage> {
           ),
         ));
   }
-
 }
-

@@ -4,15 +4,40 @@ import '../../models/student.dart';
 class AlogoliaService {
   AlogoliaService._privateConstructor();
 
+  
   static final AlogoliaService instance = AlogoliaService._privateConstructor();
+   AlgoliaTask taskAdded,
+      taskUpdated,
+      taskDeleted;
+  AlgoliaObjectSnapshot addedObject;
   static final algolisServices = AlogoliaService.instance;
 
   final Algolia _algolia = Algolia.init(
     applicationId: '3QP67BLU0T',
     apiKey: '5cf4a935655079910682450b8c7b69f2',
   );
-
   AlgoliaIndexReference get _students => _algolia.instance.index('students');
+    void performUpdateStudentsObject( updateData) {
+    _students.addObject(updateData);
+  }
+  Future<dynamic> performUpdateObject(updateData) async {
+    try {
+      taskUpdated = await _students.object().updateData(updateData);
+      return true;
+    } catch (e) {
+      return 'Fail to update ${e}';
+    }
+  }
+  
+  Future<String> performDeleteStudentsObject(deleteData) async {
+    taskAdded = await _students.deleteIndex();
+    return taskDeleted.data['objectID'].toString();
+  }
+   Future<String> performAddStudentsObject(addData) async {
+    taskAdded = await _students.addObject(addData);
+    return taskAdded.data['objectID'].toString();
+  }
+
   Future<List<Student>> performProvinceSearch({text: String}) async {
     final query = _students.search(text);
     final snap = await query.getObjects();
