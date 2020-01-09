@@ -1,6 +1,21 @@
 name: nipat
 description: A new Flutter project.
 
+<<<<<<< HEAD
+=======
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+module:
+  androidX: true
+>>>>>>> 222be97d0567222fb2f79e21a1b33914b1e22b35
 version: 1.0.0+1
 
 environment:
@@ -10,11 +25,22 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: ^0.4.0+1
+<<<<<<< HEAD
   firebase_analytics: ^5.0.9
   cloud_firestore: ^0.13.0+1
   firebase_storage: ^3.1.1
   algolia: ^0.1.7
   firebase_ml_vision: ^0.9.3+5
+=======
+  firebase_analytics: ^4.0.2
+  cloud_firestore: ^0.13.0+1
+  firebase_storage: ^3.0.6
+  algolia: ^0.1.7
+  # firebase_ml_vision: 0.9.3+5
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+>>>>>>> 222be97d0567222fb2f79e21a1b33914b1e22b35
   cupertino_icons: ^0.1.2
   image_picker: ^0.6.2+3
   logger: ^0.8.2
