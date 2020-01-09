@@ -6,15 +6,13 @@ class Constant {
   static const String CAMERA = 'Camera';
   static const String REPORT = 'Report';
   static const String INSERT = 'InsertDataStusent';
-  
-  
 
-  //routes
-  static const String HOME_ROUTE = '/home';
-  static const String PROFILE_ROUTE = '/profile';
-  static const String CAMERA_ROUTE = '/camera';
-  static const String REPORT_ROUTE = '/report';
-  static const String INSERT_ROUTE = '/insert';
+  // //routes
+  // static const String HOME_ROUTE = '/home';
+  // static const String PROFILE_ROUTE = '/profile';
+  // static const String CAMERA_ROUTE = '/camera';
+  // static const String REPORT_ROUTE = '/report';
+  // static const String INSERT_ROUTE = '/insert';
 
   //color
   static const Color PRIMARY_COLOR = Color(0xFF212121);

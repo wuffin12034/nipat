@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nipat/src/pages/profile_page/profile.dart';
 import 'package:nipat/src/utils/constant.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   Future getImageFromCam() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
-//      _image = image;
+      //  _image = image;
     });
   }
 
@@ -41,7 +42,14 @@ class _HomePageState extends State<HomePage> {
                   child: RaisedButton(
                     color: Constant.R_COLOR,
                     onPressed: () {
-                      Navigator.pushNamed(context, Constant.PROFILE_ROUTE);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ProfilePage();
+                          },
+                        ),
+                      );
                     },
                     child: Row(
                       children: <Widget>[
@@ -74,7 +82,6 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(right: 20, left: 20),
                   child: RaisedButton(
                     color: Constant.G_COLOR,
-//                  onPressed: () {Navigator.pushNamed(context, Constant.CAMERA_ROUTE);},
                     onPressed: getImageFromCam,
                     child: Row(
                       children: <Widget>[
@@ -108,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                   child: RaisedButton(
                     color: Constant.B_COLOR,
                     onPressed: () {
-                      Navigator.pushNamed(context, Constant.REPORT_ROUTE);
+                      Navigator.push(context, Constant.REPORT_ROUTE);
                     },
                     child: Row(
                       children: <Widget>[
