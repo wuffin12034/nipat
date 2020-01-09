@@ -13,10 +13,10 @@ class InsertDataPage extends StatefulWidget {
 }
 
 class _InsertDataPageState extends State<InsertDataPage> {
-  Student newStudent = new Student();
+  Student newStudent = Student();
   final algoliaService = AlogoliaService.instance;
 
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DocumentReference docRef;
 
   void _submitForm() async {
@@ -31,7 +31,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
       "department": newStudent.department,
       "year": newStudent.year,
       "state": "AWAITING_FOR_IMAGE",
-      "set": newStudent.sets,
+      "sec": newStudent.sec,
       "createdAt": '', //DATE,
       "updatedAt": DateTime.now().millisecondsSinceEpoch, //DATE,
     };
@@ -164,7 +164,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                         Icons.person,
                       ),
                     ),
-                    onSaved: (val) => newStudent.sets = val,
+                    onSaved: (val) => newStudent.sec = val,
                   ),
                   buildSizedBox(13.0),
                   Container(

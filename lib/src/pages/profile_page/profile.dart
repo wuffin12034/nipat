@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('Sec').snapshots(),
+        stream: Firestore.instance.collection('sec').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {

@@ -21,7 +21,7 @@ class _InsertsecPageState extends State<InsertsecPage> {
     if (newSec.number.isNotEmpty) {
       try {
         DocumentReference docRef =
-            await Firestore.instance.collection('Sec').add(
+            await Firestore.instance.collection('sec').add(
           {
             "number": newSec.number,
           },
