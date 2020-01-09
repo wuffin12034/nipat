@@ -53,7 +53,6 @@ class _EditinsertimagePageState extends State<EditinsertimagePage> {
   void _submitForm() async {
     String _imageUrl = await _onImageUploader(_image, widget.studentID);
 
-
     if (_imageUrl != null) {
       await Firestore.instance
           .collection('students')
@@ -62,9 +61,14 @@ class _EditinsertimagePageState extends State<EditinsertimagePage> {
         "image": _imageUrl,
       });
     }
-       Navigator.push(context, MaterialPageRoute(builder: (context){
-                return HomePage();
-   }));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return HomePage();
+        },
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
@@ -72,7 +76,6 @@ class _EditinsertimagePageState extends State<EditinsertimagePage> {
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        // backgroundColor: Constant.BG_COLOR,
       ),
       body: Center(
         child: Form(
@@ -89,7 +92,7 @@ class _EditinsertimagePageState extends State<EditinsertimagePage> {
                       children: <Widget>[
                         Container(
                           height: 100.0,
-                          width: 274.0, //การตั้งค่าปุ่ม
+                          width: 274.0,
                           child: Center(
                             child: _image == null
                                 ? Text('กรุณาเลือกรูปภาพ')
@@ -110,7 +113,9 @@ class _EditinsertimagePageState extends State<EditinsertimagePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: _submitForm, child: Icon(Icons.file_upload)),
+        onPressed: _submitForm,
+        child: Icon(Icons.file_upload),
+      ),
     );
   }
 }
