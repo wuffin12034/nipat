@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../utils/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../utils/constant.dart';
 import '../../models/student.dart';
-import './insert_image_page.dart';
-import '../../widgets/widgets.dart';
-import '../../widgets/Service/AlogoliaService.dart';
+import 'insert_image.dart';
+import '../../components/widgets.dart';
+import '../../services/alogolia_service.dart';
 
 class InsertDataPage extends StatefulWidget {
   @override
@@ -13,8 +13,7 @@ class InsertDataPage extends StatefulWidget {
 
 class _InsertDataPageState extends State<InsertDataPage> {
   Student newStudent = new Student();
-   final algoliaService = AlogoliaService.instance;
-
+  final algoliaService = AlogoliaService.instance;
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
@@ -22,24 +21,20 @@ class _InsertDataPageState extends State<InsertDataPage> {
     final FormState form = _formKey.currentState;
     form.save();
 
-    
-     Map<String,dynamic> addData={
-        "firstName": newStudent.firstName,
+    Map<String, dynamic> addData = {
+      "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
       "identificationNumber": newStudent.identificationNumber,
       "faculty": newStudent.faculty,
       "department": newStudent.department,
       "year": newStudent.year,
       "state": "AWAITING_FOR_IMAGE",
-      "set":newStudent.sets,
+      "set": newStudent.sets,
       "createdAt": '', //DATE,
-      "updatedAt": '', //DATE,
-
-     };
-     DocumentReference docRef =
+      "updatedAt": DateTime.now().millisecondsSinceEpoch, //DATE,
+    };
+    DocumentReference docRef =
         await Firestore.instance.collection('students').add(addData);
-  
-   
 
     print(docRef);
 
@@ -53,11 +48,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
     } else {
       print('error');
     }
-    
-     await algoliaService.performAddStudentsObject(addData);
-     
-  }
 
+    await algoliaService.performAddStudentsObject(addData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +142,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
                       onSaved: (val) => newStudent.year = val,
                     ),
                     buildSizedBox(13.0),
-                     TextFormField(
+                    TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนหมู่เรียน',
@@ -187,6 +180,4 @@ class _InsertDataPageState extends State<InsertDataPage> {
           ),
         ));
   }
-
 }
-

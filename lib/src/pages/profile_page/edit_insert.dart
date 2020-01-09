@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../utils/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../utils/constant.dart';
 import '../../models/student.dart';
-import '../../widgets/widgets.dart';
-import '../../widgets/Service/AlogoliaService.dart';
+import '../../components/widgets.dart';
+import '../../services/alogolia_service.dart';
 
 class EditinsertPage extends StatefulWidget {
   @override
-  EditinsertPage({Key key,
-  this.docID,
-  })
-  :super(key:key);
+  EditinsertPage({
+    Key key,
+    this.docID,
+  }) : super(key: key);
   final String docID;
- 
+
   _EditinsertPageState createState() => _EditinsertPageState();
 }
 
@@ -25,44 +25,27 @@ class _EditinsertPageState extends State<EditinsertPage> {
     final algoliaService = AlogoliaService.instance;
     final FormState form = _formKey.currentState;
     form.save();
-    
- Map<String,dynamic> upData={
-        "firstName": newStudent.firstName,
+
+    Map<String, dynamic> upData = {
+      "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
       "identificationNumber": newStudent.identificationNumber,
       "faculty": newStudent.faculty,
       "department": newStudent.department,
       "year": newStudent.year,
       "state": "AWAITING_FOR_IMAGE",
-      "set":newStudent.sets,
-      "createdAt": '', //DATE,
-      "updatedAt": '', //DATE,
+      "set": newStudent.sets,
+      "createdAt": '',
+      "updatedAt": DateTime.now().millisecondsSinceEpoch,
+    };
 
-     };
-    
     await Firestore.instance
-    .collection('students')
-    .document(widget.docID)
-    .updateData(
-    upData
-    );
-   await algoliaService.performUpdateStudentsObject( upData);
+        .collection('students')
+        .document(widget.docID)
+        .updateData(upData);
+    await algoliaService.performUpdateStudentsObject(upData);
     Navigator.pop(context);
-    }
-    //     await Firestore.instance.collection('students').add({
-    //   "firstName": newStudent.firstName,
-    //   "lastName": newStudent.lastName,
-    //   "identificationNumber": newStudent.identificationNumber,
-    //   "faculty": newStudent.faculty,
-    //   "department": newStudent.department,
-    //   "year": newStudent.year,
-    //   "state": "AWAITING_FOR_IMAGE",
-    //   "set":newStudent.sets,
-    //   "createdAt": '', //DATE,
-    //   "updatedAt": '', //DATE,
-    // });
-
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +137,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
                       onSaved: (val) => newStudent.year = val,
                     ),
                     buildSizedBox(13.0),
-                     TextFormField(
+                    TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'กรุณาป้อนหมู่เรียน',

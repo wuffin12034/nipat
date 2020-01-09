@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nipat/src/models/student.dart';
-import 'package:nipat/src/pages/profile_page/insertsecPage.dart';
-import 'package:nipat/src/pages/profile_page/insertsec_student.dart';
-import 'package:nipat/src/utils/constant.dart';
-import 'package:nipat/src/widgets/Service/AlogoliaService.dart';
+import '../../models/student.dart';
+import 'insert_sec.dart';
+import 'insert_sec_student.dart';
+import '../../utils/constant.dart';
+import '../../services/alogolia_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -23,63 +21,60 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Constant.BG_COLOR,
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.add), onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return InsertsecPage();
-              }));
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return InsertsecPage();
+                }));
               }),
-                        IconButton(
-              icon: Icon(Icons.search), onPressed: () => showSearch(context: context,delegate: DataSearch()))
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () =>
+                  showSearch(context: context, delegate: DataSearch()))
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance
-              .collection('Sec')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                    child: Text('Loading...',
-                        style: TextStyle(color: Colors.black)));
-              default:
-                return ListView(
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
-                    return ListTile(
-                      title: Text(
-                        document['numbersec'],
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.black,
-                      ),
-                      
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>InsertsecStudentPage(
-                                  
-                                  
-                                  numbersec: document['numbersec'],
-                                  
-                                ),
+        stream: Firestore.instance.collection('Sec').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                  child: Text('Loading...',
+                      style: TextStyle(color: Colors.black)));
+            default:
+              return ListView(
+                children:
+                    snapshot.data.documents.map((DocumentSnapshot document) {
+                  return ListTile(
+                    title: Text(
+                      document['numbersec'],
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InsertsecStudentPage(
+                            numbersec: document['numbersec'],
                           ),
-                        );
-                      },
-                    );
-                  }).toList(),
-                );
-            }
-          },
-        ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              );
+          }
+        },
+      ),
     );
   }
 }
+
 class DataSearch extends SearchDelegate<String> {
   final algoliaService = AlogoliaService.instance;
 
@@ -129,17 +124,16 @@ class DataSearch extends SearchDelegate<String> {
                             child: Text(
                               student.firstName,
                               style: TextStyle(fontSize: 18.0),
-                              
                             )),
                       ]),
                     ],
                   ),
-                  
                 ),
-                onTap: (){
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>ProfilePage(
-                    
-                  )),);
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
                 },
               )),
             );

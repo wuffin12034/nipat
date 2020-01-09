@@ -5,4 +5,6 @@ class Course {
   String name;
   String description;
   List<Section> sec;
+
+  Course({this.number, this.name, this.description, this.sec});
 }

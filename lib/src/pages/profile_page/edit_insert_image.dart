@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:nipat/src/pages/home_page/home_page.dart';
-import 'package:nipat/src/utils/constant.dart';
+import '../home_page/home.dart';
+import '../../utils/constant.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class InsertImagePage extends StatefulWidget {
-  InsertImagePage({
+class EditinsertimagePage extends StatefulWidget {
+  EditinsertimagePage({
     Key key,
     this.docID,
     this.studentID,
@@ -18,10 +18,10 @@ class InsertImagePage extends StatefulWidget {
   final String studentID;
 
   @override
-  _InsertImagePageState createState() => _InsertImagePageState();
+  _EditinsertimagePageState createState() => _EditinsertimagePageState();
 }
 
-class _InsertImagePageState extends State<InsertImagePage> {
+class _EditinsertimagePageState extends State<EditinsertimagePage> {
   File _image;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 

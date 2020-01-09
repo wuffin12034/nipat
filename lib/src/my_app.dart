@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import '../src/pages/camera_page/camera_page.dart';
-import '../src/pages/home_page/home_page.dart';
-import '../src/pages/insert_data_page/insert_info_page.dart';
-import '../src/pages/profile_page/profile_page.dart';
-import '../src/pages/report_page/report_page.dart';
 import '../src/utils/constant.dart';
+import '../src/pages/camera_page/camera.dart';
+import './pages/home_page/home.dart';
+import './pages/insert_data_page/insert_info.dart';
+import './pages/profile_page/profile.dart';
 
 class MyApp extends StatelessWidget {
   final _route = <String, WidgetBuilder>{
     Constant.HOME_ROUTE: (context) => HomePage(),
     Constant.PROFILE_ROUTE: (context) => ProfilePage(),
     Constant.CAMERA_ROUTE: (context) => CameraPage(),
-    // Constant.REPORT_ROUTE: (context) => ReprotPage(),
+    // Constant.REPORT_ROUTE: (context) => ReportPage(),
     Constant.INSERT_ROUTE: (context) => InsertDataPage(),
-   
   };
 
   @override

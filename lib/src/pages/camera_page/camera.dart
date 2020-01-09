@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nipat/src/utils/constant.dart';
+import '../../utils/constant.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
@@ -13,7 +13,6 @@ class _CameraPageState extends State<CameraPage> {
   File _image;
 
   Future getImageFromCam() async {
-    // for camera
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = image;

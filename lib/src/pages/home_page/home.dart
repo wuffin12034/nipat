@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future getImageFromCam() async {
-    // for camera
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
 //      _image = image;

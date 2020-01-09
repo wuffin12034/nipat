@@ -4,4 +4,6 @@ class Teacher {
   String firstName;
   String lastName;
   List<Course> course;
+
+  Teacher({this.firstName, this.lastName, this.course});
 }
