@@ -35,7 +35,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
       "department": newStudent.department,
       "year": newStudent.year,
       "state": "AWAITING_FOR_IMAGE",
-      "set": newStudent.sets,
+      "sec": newStudent.sec,
       "createdAt": '',
       "updatedAt": DateTime.now().millisecondsSinceEpoch,
     };
@@ -149,7 +149,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.sets = val,
+                      onSaved: (val) => newStudent.sec = val,
                     ),
                     buildSizedBox(13.0),
                     Container(
