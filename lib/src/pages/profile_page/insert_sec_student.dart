@@ -85,8 +85,8 @@ class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: Text('ต้องการลบข้อมูลร้าน?'),
-                                content: Text('ลบข้อมูลร้าน'),
+                                title: Text('ต้องการลบนิสิต?'),
+                                content: Text('ลบข้อมูลนิสิต'),
                                 actions: <Widget>[
                                   FlatButton(
                                       onPressed: () {
