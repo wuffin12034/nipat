@@ -28,9 +28,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 }));
               }),
           IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () =>
-                  showSearch(context: context, delegate: DataSearch()))
+            icon: Icon(Icons.search),
+            onPressed: () => showSearch(
+              context: context,
+              delegate: DataSearch(),
+            ),
+          )
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -40,33 +43,37 @@ class _ProfilePageState extends State<ProfilePage> {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(
-                  child: Text('Loading...',
-                      style: TextStyle(color: Colors.black)));
+                child: Text(
+                  'Loading...',
+                  style: TextStyle(color: Colors.black),
+                ),
+              );
             default:
               return ListView(
-                children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
-                  return ListTile(
-                    title: Text(
-                      document['numbersec'],
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Colors.black,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => InsertsecStudentPage(
-                            numbersec: document['numbersec'],
+                children: snapshot.data.documents.map(
+                  (DocumentSnapshot document) {
+                    return ListTile(
+                      title: Text(
+                        document['numbersec'],
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: Colors.black,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InsertsecStudentPage(
+                              numbersec: document['numbersec'],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
+                        );
+                      },
+                    );
+                  },
+                ).toList(),
               );
           }
         },

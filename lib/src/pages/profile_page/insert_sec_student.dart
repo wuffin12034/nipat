@@ -21,13 +21,14 @@ class InsertsecStudentPage extends StatefulWidget {
 
 class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
   void _submitForm() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return EditinsertPage();
-    }));
-  }
-
-  _dismissDialog() {
-    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return EditinsertPage();
+        },
+      ),
+    );
   }
 
   @override
@@ -39,77 +40,86 @@ class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
         backgroundColor: Constant.BG_COLOR,
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return EditsecPage();
-                }));
-              }),
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return EditsecPage();
+                  },
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance
-              .collection('students')
-              .where('set', isEqualTo: widget.numbersec)
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                    child: Text('Loading...',
-                        style: TextStyle(color: Colors.black)));
-              default:
-                return ListView(
-                    children: snapshot.data.documents
-                        .map((DocumentSnapshot document) {
+        stream: Firestore.instance
+            .collection('students')
+            .where('set', isEqualTo: widget.numbersec)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                  child: Text('Loading...',
+                      style: TextStyle(color: Colors.black)));
+            default:
+              return ListView(
+                  children: snapshot.data.documents.map(
+                (DocumentSnapshot document) {
                   return ListTile(
-                      title: Text(
-                        document['firstName'],
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditinsertPage(
-                                    docID: document.documentID,
-                                  )),
-                        );
-                      },
-                      trailing:
-                          Icon(Icons.keyboard_arrow_right, color: Colors.black),
-                      onLongPress: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('ต้องการลบนิสิต?'),
-                                content: Text('ลบข้อมูลนิสิต'),
-                                actions: <Widget>[
-                                  FlatButton(
-                                      onPressed: () {
-                                        _dismissDialog();
-                                      },
-                                      child: Text('ยกเลิก')),
-                                  FlatButton(
-                                    onPressed: () {
-                                      Firestore.instance
-                                          .collection('students')
-                                          .document(document.documentID)
-                                          .delete();
-                                      _dismissDialog();
-                                    },
-                                    child: Text('ยืนยัน'),
-                                  )
-                                ],
-                              );
-                            });
-                      });
-                }).toList());
-            }
-          }),
+                    title: Text(
+                      document['firstName'],
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditinsertPage(
+                            docID: document.documentID,
+                          ),
+                        ),
+                      );
+                    },
+                    trailing:
+                        Icon(Icons.keyboard_arrow_right, color: Colors.black),
+                    onLongPress: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('ต้องการลบข้อมูลร้าน?'),
+                            content: Text('ลบข้อมูลร้าน'),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text('ยกเลิก'),
+                              ),
+                              FlatButton(
+                                onPressed: () async {
+                                  await Firestore.instance
+                                      .collection('students')
+                                      .document(document.documentID)
+                                      .delete();
+                                  Navigator.pop(context);
+                                },
+                                child: Text('ยืนยัน'),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ).toList());
+          }
+        },
+      ),
     );
   }
 }

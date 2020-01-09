@@ -25,17 +25,8 @@ class _InsertImagePageState extends State<InsertImagePage> {
   File _image;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  Future getImageFromCam() async {
-    // for camera
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
-    });
-  }
-
-  Future getImageFromGallery() async {
-    // for gallery
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  Future getImageFromSource(ImageSource source) async {
+    var image = await ImagePicker.pickImage(source: source);
     setState(() {
       _image = image;
     });
@@ -43,7 +34,7 @@ class _InsertImagePageState extends State<InsertImagePage> {
 
   Future<String> _onImageUploader(File imagePath, String studentId) async {
     final StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('${studentId}.png');
+        FirebaseStorage.instance.ref().child('$studentId.png');
     final StorageUploadTask task = firebaseStorageRef.putFile(imagePath);
     StorageTaskSnapshot storageTaskSnapshot = await task.onComplete;
     String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
@@ -53,7 +44,6 @@ class _InsertImagePageState extends State<InsertImagePage> {
   void _submitForm() async {
     String _imageUrl = await _onImageUploader(_image, widget.studentID);
 
-
     if (_imageUrl != null) {
       await Firestore.instance
           .collection('students')
@@ -62,9 +52,14 @@ class _InsertImagePageState extends State<InsertImagePage> {
         "image": _imageUrl,
       });
     }
-       Navigator.push(context, MaterialPageRoute(builder: (context){
-                return HomePage();
-   }));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return HomePage();
+        },
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
@@ -72,7 +67,6 @@ class _InsertImagePageState extends State<InsertImagePage> {
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        // backgroundColor: Constant.BG_COLOR,
       ),
       body: Center(
         child: Form(
@@ -97,7 +91,9 @@ class _InsertImagePageState extends State<InsertImagePage> {
                           ),
                         ),
                         RaisedButton(
-                          onPressed: getImageFromCam,
+                          onPressed: () async {
+                            await getImageFromSource(ImageSource.gallery);
+                          },
                           child: Icon(Icons.add_a_photo),
                         ),
                       ],
@@ -110,7 +106,9 @@ class _InsertImagePageState extends State<InsertImagePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: _submitForm, child: Icon(Icons.file_upload)),
+        onPressed: _submitForm,
+        child: Icon(Icons.file_upload),
+      ),
     );
   }
 }

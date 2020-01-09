@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nipat/src/services/logging_service.dart';
 import '../../utils/constant.dart';
 import '../../models/student.dart';
 import '../../components/widgets.dart';
@@ -38,6 +39,8 @@ class _EditinsertPageState extends State<EditinsertPage> {
       "createdAt": '',
       "updatedAt": DateTime.now().millisecondsSinceEpoch,
     };
+
+    logger.v(upData);
 
     await Firestore.instance
         .collection('students')

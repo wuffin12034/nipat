@@ -38,20 +38,26 @@ class _EditsecPageState extends State<EditsecPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(Constant.INSERT),
-          centerTitle: true,
-          backgroundColor: Constant.BG_COLOR,
+      appBar: AppBar(
+        title: Text(Constant.INSERT),
+        centerTitle: true,
+        backgroundColor: Constant.BG_COLOR,
+      ),
+      body: Form(
+        key: _formKey,
+        autovalidate: true,
+        child: ListView(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[],
+              ),
+            )
+          ],
         ),
-        body: Form(
-            key: _formKey,
-            autovalidate: true,
-            child: ListView(children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[]))
-            ])));
+      ),
+    );
   }
 }
