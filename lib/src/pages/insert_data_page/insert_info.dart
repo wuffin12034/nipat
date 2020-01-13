@@ -7,6 +7,7 @@ import 'insert_image.dart';
 import '../../components/widgets.dart';
 import '../../services/alogolia_service.dart';
 
+
 class InsertDataPage extends StatefulWidget {
   @override
   _InsertDataPageState createState() => _InsertDataPageState();

@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   (DocumentSnapshot document) {
                     return ListTile(
                       title: Text(
-                        document['numbersec'],
+                        document['number'],
                         style: TextStyle(color: Colors.black),
                       ),
                       trailing: Icon(
