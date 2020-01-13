@@ -19,6 +19,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DocumentReference docRef;
+  DocumentReference docRef2;
 
   void _submitForm() async {
     Dio dio = new Dio();
@@ -71,9 +72,11 @@ class _InsertDataPageState extends State<InsertDataPage> {
       "student_doce": docRef.documentID,
       "qr_image_url": response.data['imageUrl'],
     };
+
     try {
-      docRef = await Firestore.instance.collection('qrstudents').add(qrStudent);
-      logger.d(docRef);
+      docRef2 =
+          await Firestore.instance.collection('qrstudents').add(qrStudent);
+      logger.v(docRef2);
     } catch (e) {
       logger.e(e.toString());
       return;

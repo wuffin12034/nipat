@@ -3,7 +3,7 @@ import '../../utils/constant.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter_qr_scanner/qr_scanner_camera.dart';
+// import 'package:flutter_qr_scanner/qr_scanner_camera.dart';
 
 class CameraPage extends StatefulWidget {
   @override
