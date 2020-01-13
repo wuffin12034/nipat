@@ -19,7 +19,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   image_picker: ^0.6.2+3
   logger: ^0.8.2
-  
+  dio: ^3.0.8
+  flutter_qr_scanner: ^0.1.5
 
 dev_dependencies:
   flutter_test:

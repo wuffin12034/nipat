@@ -6,7 +6,7 @@ import '../../models/student.dart';
 import 'insert_image.dart';
 import '../../components/widgets.dart';
 import '../../services/alogolia_service.dart';
-
+import 'package:dio/dio.dart';
 
 class InsertDataPage extends StatefulWidget {
   @override
@@ -21,6 +21,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
   DocumentReference docRef;
 
   void _submitForm() async {
+    Dio dio = new Dio();
+    dio.options.headers['content-type'] = 'application/json';
+
     final FormState form = _formKey.currentState;
     form.save();
 
@@ -38,9 +41,38 @@ class _InsertDataPageState extends State<InsertDataPage> {
     };
 
     logger.v(addData);
+    Map<String, dynamic> qrdata = {
+      "firstName": newStudent.firstName,
+      "lastName": newStudent.lastName,
+      "identificationNumber": newStudent.identificationNumber,
+      // "faculty": newStudent.faculty,
+      // "department": newStudent.department,
+      // "year": newStudent.year,
+      // "state": "AWAITING_FOR_IMAGE",
+      // "sec": newStudent.sec,
+      "createdAt": '', //DATE,
+      // "updatedAt": DateTime.now().millisecondsSinceEpoch, //DATE,
+    };
+
+    var response =
+        await dio.post("https://b47038de.ngrok.io/qr_code", data: qrdata);
+    print(response.data);
+    logger.v(qrdata);
 
     try {
       docRef = await Firestore.instance.collection('students').add(addData);
+      logger.d(docRef);
+    } catch (e) {
+      logger.e(e.toString());
+      return;
+    }
+
+    Map<String, dynamic> qrStudent = {
+      "student_doce": docRef.documentID,
+      "qr_image_url": response.data['imageUrl'],
+    };
+    try {
+      docRef = await Firestore.instance.collection('qrstudents').add(qrStudent);
       logger.d(docRef);
     } catch (e) {
       logger.e(e.toString());
