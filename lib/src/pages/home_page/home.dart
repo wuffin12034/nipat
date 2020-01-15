@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nipat/src/login_page/log_admin.dart';
+import 'package:nipat/src/login_page/log_taecher.dart';
+import 'package:nipat/src/login_page/login_student.dart';
 import 'package:nipat/src/pages/camera_page/camera.dart';
+import 'package:nipat/src/pages/home_page/adminbutt.dart';
 import 'package:nipat/src/pages/insert_data_page/insert_info.dart';
 import 'package:nipat/src/pages/profile_page/profile.dart';
 import 'package:nipat/src/utils/constant.dart';
@@ -31,13 +35,13 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 20, left: 20),
                   child: RaisedButton(
-                    color: Constant.R_COLOR,
+                    color: Constant.G_COLOR,
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return ProfilePage();
+                            return LoginAdminPage();
                           },
                         ),
                       );
@@ -54,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(width: 30),
                         Text(
-                          "การแสดงหมู่เรียน",
+                          "แอดมิน",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -73,27 +77,29 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(right: 20, left: 20),
                   child: RaisedButton(
                     color: Constant.G_COLOR,
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return CameraPage();
-                        },
-                      ),
-                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LoginStudentPage();
+                          },
+                        ),
+                      );
+                    },
                     child: Row(
                       children: <Widget>[
                         SizedBox(
                           width: 10,
                         ),
                         Icon(
-                          Icons.computer,
+                          Icons.folder_open,
                           size: 70,
                           color: Colors.white,
                         ),
                         SizedBox(width: 30),
                         Text(
-                          "กล้อง",
+                          "นิสิต",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -105,18 +111,57 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: 18),
+              // Container(
+              //   height: 120,
+              //   width: double.infinity,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(right: 20, left: 20),
+              //     child: RaisedButton(
+              //       color: Constant.G_COLOR,
+              //       onPressed: () => Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) {
+              //             return CameraPage();
+              //           },
+              //         ),
+              //       ),
+              //       child: Row(
+              //         children: <Widget>[
+              //           SizedBox(
+              //             width: 10,
+              //           ),
+              //           Icon(
+              //             Icons.computer,
+              //             size: 70,
+              //             color: Colors.white,
+              //           ),
+              //           SizedBox(width: 30),
+              //           Text(
+              //             "กล้อง",
+              //             style: TextStyle(
+              //               fontSize: 18,
+              //               color: Colors.white,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 18),
               Container(
                 height: 120,
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 20, left: 20),
                   child: RaisedButton(
-                    color: Constant.R_COLOR,
+                    color: Constant.G_COLOR,
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return InsertDataPage();
+                          return LoginTeacherPage();
                         },
                       ),
                     ),
@@ -129,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                             size: 70, color: Colors.white),
                         SizedBox(width: 30),
                         Text(
-                          "เพิ่งข้อมูล",
+                          "อาจารย์",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,

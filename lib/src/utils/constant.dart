@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Constant {
-  static const String APP_NAME = 'การสแกนใบหน้า';
+  static const String APP_NAME = 'Check name';
   static const String PROFILE = 'Profile';
   static const String CAMERA = 'Camera';
   static const String REPORT = 'Report';
   static const String INSERT = 'InsertDataStusent';
+  static const String LOGIN = 'Login';
 
   // //routes
   // static const String HOME_ROUTE = '/home';

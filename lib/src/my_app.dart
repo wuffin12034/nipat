@@ -4,6 +4,7 @@ import '../src/pages/camera_page/camera.dart';
 import './pages/home_page/home.dart';
 import './pages/insert_data_page/insert_info.dart';
 import './pages/profile_page/profile.dart';
+import './login_page/login_student.dart';
 
 class MyApp extends StatelessWidget {
   @override

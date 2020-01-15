@@ -51,12 +51,13 @@ class _InsertDataPageState extends State<InsertDataPage> {
       // "year": newStudent.year,
       // "state": "AWAITING_FOR_IMAGE",
       // "sec": newStudent.sec,
-      "createdAt": '', //DATE,
+      // "createdAt": '', //DATE,
+      "Check name": 'มาเรียน',
       // "updatedAt": DateTime.now().millisecondsSinceEpoch, //DATE,
     };
 
     var response =
-        await dio.post("https://b47038de.ngrok.io/qr_code", data: qrdata);
+        await dio.post("https://e025c042.ngrok.io/qr_code", data: qrdata);
     print(response.data);
     logger.v(qrdata);
 

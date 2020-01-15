@@ -39,25 +39,25 @@ class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
         centerTitle: true,
         backgroundColor: Constant.BG_COLOR,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return EditsecPage();
-                  },
-                ),
-              );
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.add),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) {
+          //           return EditsecPage();
+          //         },
+          //       ),
+          //     );
+          //   },
+          // ),
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
             .collection('students')
-            .where('set', isEqualTo: widget.numbersec)
+            .where('sec', isEqualTo: widget.numbersec)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
@@ -92,8 +92,8 @@ class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text('ต้องการลบข้อมูลร้าน?'),
-                            content: Text('ลบข้อมูลร้าน'),
+                            title: Text('ต้องการลบข้อมูลนิสิต?'),
+                            content: Text('ลบข้อมูลนิสิต'),
                             actions: <Widget>[
                               FlatButton(
                                 onPressed: () => Navigator.pop(context),
