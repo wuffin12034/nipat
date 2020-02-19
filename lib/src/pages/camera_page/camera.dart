@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import '../../utils/constant.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:async';
 import 'dart:io';
-// import 'package:flutter_qr_scanner/qr_scanner_camera.dart';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:nipat/src/utils/constant.dart';
 
 class CameraPage extends StatefulWidget {
   @override

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:nipat/src/scoped_modls/user.dart';
+import 'package:nipat/src/services/auth_service.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../scoped_modls/user.dart';
-import '../services/logging_service.dart';
-import '../services/auth_service.dart';
 
-class LoginStudentPage extends StatefulWidget {
-  LoginStudentPage({this.auth, this.loginCallback});
+class LoginPage extends StatefulWidget {
+  LoginPage({this.auth, this.loginCallback});
 
   final BaseAuth auth;
   final VoidCallback loginCallback;
 
   @override
-  State<StatefulWidget> createState() => _LoginStudentPageState();
+  State<StatefulWidget> createState() => _LoginPageState();
 }
 
-class _LoginStudentPageState extends State<LoginStudentPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = new GlobalKey<FormState>();
 
   String _email;
@@ -55,7 +54,6 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
           widget.loginCallback();
         }
       } catch (e) {
-        logger.e(e);
         setState(() {
           _isLoading = false;
           _errorMessage = e.message;
@@ -87,17 +85,13 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<User>(
-      builder: (BuildContext context, Widget child, User model) {
-        return Scaffold(
-          body: Stack(
-            children: <Widget>[
-              _showForm(),
-              _showCircularProgress(),
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          _showForm(),
+          _showCircularProgress(),
+        ],
+      ),
     );
   }
 

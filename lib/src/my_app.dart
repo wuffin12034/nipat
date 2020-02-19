@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import '../src/utils/constant.dart';
-import '../src/pages/camera_page/camera.dart';
-import './pages/home_page/home.dart';
-import './pages/insert_data_page/insert_info.dart';
-import './pages/profile_page/profile.dart';
-import './login_page/login_student.dart';
+import 'package:nipat/src/root.dart';
+import 'package:nipat/src/scoped_modls/user.dart';
+import 'package:nipat/src/services/auth_service.dart';
+import 'package:nipat/src/utils/constant.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class MyApp extends StatelessWidget {
+  final User _model = User();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: Constant.APP_NAME,
-      // routes: _route,
-      home: HomePage(),
+    return ScopedModel<User>(
+      model: _model,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: Constant.APP_NAME,
+        home: Root(
+          auth: AuthServices(),
+        ),
+      ),
     );
   }
 }

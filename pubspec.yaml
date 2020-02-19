@@ -3,6 +3,7 @@ description: A new Flutter project.
 
 module:
   androidX: true
+
 version: 1.0.0+1
 
 environment:
@@ -11,18 +12,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^0.4.0+1
-  firebase_analytics: ^4.0.2
-  firebase_auth: ^0.14.0+9
-  cloud_firestore: ^0.13.0+1
-  firebase_storage: ^3.0.6
+  firebase_analytics: ^5.0.11
+  firebase_auth: ^0.15.4
+  cloud_firestore: ^0.13.2+1
+  firebase_storage: ^3.1.1
   algolia: ^0.1.7
   cupertino_icons: ^0.1.2
-  image_picker: ^0.6.2+3
-  logger: ^0.8.2
+  image_picker: ^0.6.3+1
+  logger: ^0.8.3
   dio: ^3.0.8
   scoped_model: ^1.0.1
-  # flutter_qr_scanner: ^0.1.5
 
 dev_dependencies:
   flutter_test:

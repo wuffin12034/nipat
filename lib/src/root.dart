@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nipat/src/login_page/login_student.dart';
-import '../services/auth_service.dart';
+import 'package:nipat/src/pages/home_page/home.dart';
+import 'package:nipat/src/pages/login_page/login_page.dart';
+import 'package:nipat/src/scoped_modls/user.dart';
+import 'package:nipat/src/services/auth_service.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -9,7 +12,9 @@ enum AuthStatus {
 }
 
 class Root extends StatefulWidget {
-  Root({this.auth});
+  Root({
+    this.auth,
+  });
 
   final BaseAuth auth;
 
@@ -25,6 +30,7 @@ class _RootState extends State<Root> {
   @override
   void initState() {
     super.initState();
+
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
@@ -37,7 +43,9 @@ class _RootState extends State<Root> {
   }
 
   void loginCallback() {
+    final _user = ScopedModel.of<User>(context, rebuildOnChange: true);
     widget.auth.getCurrentUser().then((user) {
+      _user.updateUserRole(user.email);
       setState(() {
         _userId = user.uid.toString();
         _userEmail = user.email;
@@ -71,21 +79,21 @@ class _RootState extends State<Root> {
         return buildWaitingScreen();
         break;
       case AuthStatus.NOT_LOGGED_IN:
-        return LoginStudentPage(
+        return LoginPage(
           auth: widget.auth,
           loginCallback: loginCallback,
         );
         break;
       case AuthStatus.LOGGED_IN:
-        // if (_userId.length > 0 && _userId != null) {
-        //   return HomePage(
-        //     userId: _userId,
-        //     userEmail: _userEmail,
-        //     auth: widget.auth,
-        //     logoutCallback: logoutCallback,
-        //   );
-        // } else
-        //   return buildWaitingScreen();
+        if (_userId.length > 0 && _userId != null) {
+          return HomePage(
+            userId: _userId,
+            userEmail: _userEmail,
+            auth: widget.auth,
+            logoutCallback: logoutCallback,
+          );
+        } else
+          return buildWaitingScreen();
         break;
       default:
         return buildWaitingScreen();
