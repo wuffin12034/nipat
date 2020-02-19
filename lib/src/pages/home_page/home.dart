@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nipat/src/pages/camera_page/camera.dart';
-import 'package:nipat/src/scoped_modls/user.dart';
+import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/auth_service.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';

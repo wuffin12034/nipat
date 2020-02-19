@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nipat/src/scoped_modls/user.dart';
 import 'package:nipat/src/services/auth_service.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.auth, this.loginCallback});
@@ -14,7 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _email;
   String _password;
@@ -117,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Text("Dismiss"),
               onPressed: () {
                 toggleFormMode();
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
             ),
           ],
