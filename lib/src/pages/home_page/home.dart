@@ -43,10 +43,16 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 60, bottom: 30),
+                    padding: const EdgeInsets.only(
+                      top: 60,
+                      bottom: 30,
+                    ),
                     child: Text(
                       Constant.APP_NAME,
-                      style: TextStyle(fontSize: 30, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   user.role == UserType.ADMIN
@@ -54,7 +60,10 @@ class _HomePageState extends State<HomePage> {
                           height: 120,
                           width: double.infinity,
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 20, left: 20),
+                            padding: const EdgeInsets.only(
+                              right: 20,
+                              left: 20,
+                            ),
                             child: RaisedButton(
                               color: Constant.G_COLOR,
                               onPressed: () => Navigator.push(
