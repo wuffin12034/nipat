@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nipat/src/components/widgets.dart';
+import 'package:nipat/src/models/section.dart';
+import 'package:nipat/src/pages/home_page/home.dart';
 import 'package:nipat/src/services/logging_service.dart';
-import '../../pages/home_page/home.dart';
 import 'package:nipat/src/utils/constant.dart';
-import '../../models/section.dart';
-import '../../components/widgets.dart';
 
-class InsertsecPage extends StatefulWidget {
+class InsertSecPage extends StatefulWidget {
   @override
-  _InsertsecPageState createState() => _InsertsecPageState();
+  _InsertSecPageState createState() => _InsertSecPageState();
 }
 
-class _InsertsecPageState extends State<InsertsecPage> {
+class _InsertSecPageState extends State<InsertSecPage> {
   Section newSec = Section();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
@@ -30,9 +30,7 @@ class _InsertsecPageState extends State<InsertsecPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) {
-              return HomePage();
-            },
+            builder: (context) => HomePage(),
           ),
         );
       } catch (e) {
@@ -81,12 +79,13 @@ class _InsertsecPageState extends State<InsertsecPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: Text(
+                      child: const Text(
                         "ยืนยัน",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       onPressed: () => _submitForm(),
                     ),

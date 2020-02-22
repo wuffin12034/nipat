@@ -21,22 +21,24 @@ class AuthServices implements BaseAuth {
 
   Future<String> signIn(String email, String password) async {
     AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
     FirebaseUser user = result.user;
-    logger.v(user);
     return user.uid;
   }
 
   Future<String> signUp(String email, String password) async {
     AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
     FirebaseUser user = result.user;
     return user.uid;
   }
 
   Future<FirebaseUser> getCurrentUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
-    logger.v(user);
     return user;
   }
 

@@ -1,40 +1,27 @@
-import 'package:flutter/material.dart';
-import '../../models/section.dart';
-import '../../components/widgets.dart';
-import 'package:nipat/src/utils/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:nipat/src/models/section.dart';
+import 'package:nipat/src/utils/constant.dart';
 
-class EditsecPage extends StatefulWidget {
-  EditsecPage({
+class EditSecPage extends StatefulWidget {
+  final String numbersec;
+  final String docID;
+  final String studerntID;
+  EditSecPage({
     Key key,
     this.numbersec,
     this.docID,
     this.studerntID,
   }) : super(key: key);
-  final String numbersec;
-  final String docID;
-  final String studerntID;
 
   @override
-  _EditsecPageState createState() => _EditsecPageState();
+  _EditSecPageState createState() => _EditSecPageState();
 }
 
-class _EditsecPageState extends State<EditsecPage> {
-  @override
-  Section newSec = new Section();
+class _EditSecPageState extends State<EditSecPage> {
+  Section newSec = Section();
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-
-  void _submitForm(docID) async {
-    final FormState form = _formKey.currentState;
-    form.save();
-
-    await Firestore.instance
-        .collection('students')
-        .document(docID)
-        .updateData({"sec": newSec.number});
-    Navigator.pop(context);
-  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,5 +46,16 @@ class _EditsecPageState extends State<EditsecPage> {
         ),
       ),
     );
+  }
+
+  void _submitForm(docID) async {
+    final FormState form = _formKey.currentState;
+    form.save();
+
+    await Firestore.instance
+        .collection('students')
+        .document(docID)
+        .updateData({"sec": newSec.number});
+    Navigator.pop(context);
   }
 }

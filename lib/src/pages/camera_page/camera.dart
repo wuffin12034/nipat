@@ -1,8 +1,9 @@
-import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:nipat/src/components/custom_container.dart';
+import 'package:nipat/src/services/logging_service.dart';
 import 'package:nipat/src/utils/constant.dart';
+import 'package:qrcode_reader/qrcode_reader.dart';
 
 class CameraPage extends StatefulWidget {
   @override
@@ -10,15 +11,8 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  File _image;
-
-  Future getImageFromCam() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
-    });
-  }
-
+  String readText = '';
+  DocumentReference docRef;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,18 +27,68 @@ class _CameraPageState extends State<CameraPage> {
             width: MediaQuery.of(context).size.width,
             height: 200.0,
             child: Center(
-              child: _image == null
-                  ? Text('No image selected.')
-                  : Image.file(_image),
+              child: Text(readText),
             ),
           ),
-          FloatingActionButton(
-            onPressed: getImageFromCam,
-            tooltip: 'Pick Image',
-            child: Icon(Icons.add_a_photo),
+          CustomContainer(
+            text: 'Check',
+            color: Constant.BG_COLOR,
+            icon: Icons.check,
+            onPressed: () async {
+              bool done = await sendToCheck(readText);
+              if (done) Navigator.pop(context);
+            },
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => qrScan(),
+        tooltip: 'Scan QR',
+        child: Icon(Icons.camera_front),
+      ),
     );
+  }
+
+  Future qrScan() async {
+    Future<String> futureString = QRCodeReader()
+        .setAutoFocusIntervalInMs(200) // default 5000
+        .setForceAutoFocus(true) // default false
+        .setTorchEnabled(true) // default false
+        .setHandlePermissions(true) // default true
+        .setExecuteAfterPermissionGranted(true) // default true
+        .scan();
+
+    futureString.then(
+      (text) => setState(() {
+        readText = text;
+      }),
+    );
+  }
+
+  Future<bool> sendToCheck(String identification) async {
+    if (identification.isEmpty) return false;
+    try {
+      Firestore.instance
+          .collection('students')
+          .where('identificationNumber', isEqualTo: identification)
+          .snapshots()
+          .listen(
+        (data) {
+          print(data.documents[0].documentID);
+          Firestore.instance
+              .collection('students')
+              .document(data.documents[0].documentID)
+              .updateData(
+            {
+              'cheked': true,
+            },
+          );
+        },
+      );
+    } catch (e) {
+      logger.e(e.toString());
+      return false;
+    }
+    return true;
   }
 }

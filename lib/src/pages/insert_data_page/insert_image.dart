@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../home_page/home.dart';
-import '../../utils/constant.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:nipat/src/pages/home_page/home.dart';
+import 'package:nipat/src/utils/constant.dart';
 
 class InsertImagePage extends StatefulWidget {
   InsertImagePage({
@@ -83,10 +83,10 @@ class _InsertImagePageState extends State<InsertImagePage> {
                       children: <Widget>[
                         Container(
                           height: 100.0,
-                          width: 274.0, //การตั้งค่าปุ่ม
+                          width: 274.0,
                           child: Center(
                             child: _image == null
-                                ? Text('กรุณาเลือกรูปภาพ')
+                                ? const Text('กรุณาเลือกรูปภาพ')
                                 : Image.file(_image),
                           ),
                         ),

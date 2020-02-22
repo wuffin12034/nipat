@@ -215,9 +215,10 @@ class _InsertDataPageState extends State<InsertDataPage> {
                         child: Text(
                           "ยืนยัน",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         onPressed: () {
                           _submitForm();

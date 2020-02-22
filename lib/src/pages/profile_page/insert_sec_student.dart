@@ -1,36 +1,26 @@
-import 'package:flutter/material.dart';
-import 'edit_insert.dart';
-import 'edit_sec.dart';
-import '../../utils/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:nipat/src/components/loading_container.dart';
+import 'package:nipat/src/pages/profile_page/edit_insert.dart';
+import 'package:nipat/src/utils/constant.dart';
 
-class InsertsecStudentPage extends StatefulWidget {
-  InsertsecStudentPage({
+class InsertSecStudentPage extends StatefulWidget {
+  final String numbersec;
+
+  final String docID;
+  final String studerntID;
+  InsertSecStudentPage({
     Key key,
     this.numbersec,
     this.docID,
     this.studerntID,
   }) : super(key: key);
-  final String numbersec;
-  final String docID;
-  final String studerntID;
 
   @override
-  _InsertsecStudentPageState createState() => _InsertsecStudentPageState();
+  _InsertSecStudentPageState createState() => _InsertSecStudentPageState();
 }
 
-class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
-  void _submitForm() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return EditinsertPage();
-        },
-      ),
-    );
-  }
-
+class _InsertSecStudentPageState extends State<InsertSecStudentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,21 +28,7 @@ class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
         title: Text(Constant.INSERT),
         centerTitle: true,
         backgroundColor: Constant.BG_COLOR,
-        actions: <Widget>[
-          // IconButton(
-          //   icon: Icon(Icons.add),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) {
-          //           return EditsecPage();
-          //         },
-          //       ),
-          //     );
-          //   },
-          // ),
-        ],
+        actions: <Widget>[],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
@@ -63,9 +39,7 @@ class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Center(
-                  child: Text('Loading...',
-                      style: TextStyle(color: Colors.black)));
+              return LoadingContainer();
             default:
               return ListView(
                   children: snapshot.data.documents.map(
@@ -79,45 +53,56 @@ class _InsertsecStudentPageState extends State<InsertsecStudentPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditinsertPage(
+                          builder: (context) => EditInsertPage(
                             docID: document.documentID,
                           ),
                         ),
                       );
                     },
-                    trailing:
-                        Icon(Icons.keyboard_arrow_right, color: Colors.black),
-                    onLongPress: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text('ต้องการลบข้อมูลนิสิต?'),
-                            content: Text('ลบข้อมูลนิสิต'),
-                            actions: <Widget>[
-                              FlatButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text('ยกเลิก'),
-                              ),
-                              FlatButton(
-                                onPressed: () async {
-                                  await Firestore.instance
-                                      .collection('students')
-                                      .document(document.documentID)
-                                      .delete();
-                                  Navigator.pop(context);
-                                },
-                                child: Text('ยืนยัน'),
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    },
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.black,
+                    ),
+                    onLongPress: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('ต้องการลบข้อมูลนิสิต?'),
+                          content: Text('ลบข้อมูลนิสิต'),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('ยกเลิก'),
+                            ),
+                            FlatButton(
+                              onPressed: () async {
+                                await Firestore.instance
+                                    .collection('students')
+                                    .document(document.documentID)
+                                    .delete();
+                                Navigator.pop(context);
+                              },
+                              child: const Text('ยืนยัน'),
+                            )
+                          ],
+                        );
+                      },
+                    ),
                   );
                 },
               ).toList());
           }
+        },
+      ),
+    );
+  }
+
+  void _submitForm() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return EditInsertPage();
         },
       ),
     );

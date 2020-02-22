@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../models/student.dart';
-import 'insert_sec.dart';
-import 'insert_sec_student.dart';
-import '../../utils/constant.dart';
-import '../../services/alogolia_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nipat/src/components/loading_container.dart';
+import 'package:nipat/src/models/student.dart';
+import 'package:nipat/src/pages/profile_page/insert_sec.dart';
+import 'package:nipat/src/pages/profile_page/insert_sec_student.dart';
+import 'package:nipat/src/services/alogolia_service.dart';
+import 'package:nipat/src/utils/constant.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -21,12 +22,14 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Constant.BG_COLOR,
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return InsertsecPage();
-                }));
-              }),
+            icon: Icon(Icons.add),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InsertSecPage(),
+              ),
+            ),
+          ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () => showSearch(
@@ -42,12 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Center(
-                child: Text(
-                  'Loading...',
-                  style: TextStyle(color: Colors.black),
-                ),
-              );
+              return LoadingContainer();
             default:
               return ListView(
                 children: snapshot.data.documents.map(
@@ -65,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => InsertsecStudentPage(
+                            builder: (context) => InsertSecStudentPage(
                               numbersec: document['number'],
                             ),
                           ),
@@ -89,21 +87,25 @@ class DataSearch extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = "";
+        },
+      )
     ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: AnimatedIcon(
-            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
-        onPressed: () {
-          close(context, null);
-        });
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {
+        close(context, null);
+      },
+    );
   }
 
   @override
@@ -114,37 +116,43 @@ class DataSearch extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder<List<Student>>(
-      future: algoliaService.performProvinceSearch(text: query),
+      future: algoliaService.performStudentSearch(text: query),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final students = snapshot.data.map((student) {
-            return Container(
-              child: Center(
+          final students = snapshot.data.map(
+            (student) {
+              return Container(
+                child: Center(
                   child: GestureDetector(
-                child: Card(
-                  color: Colors.yellow[200],
-                  child: Column(
-                    children: <Widget>[
-                      Row(children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.all(7.0),
-                            child: Text(
-                              student.firstName,
-                              style: TextStyle(fontSize: 18.0),
-                            )),
-                      ]),
-                    ],
+                    child: Card(
+                      color: Colors.yellow[200],
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(7.0),
+                                child: Text(
+                                  student.firstName,
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProfilePage(),
+                      ),
+                    ),
                   ),
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()),
-                  );
-                },
-              )),
-            );
-          }).toList();
+              );
+            },
+          ).toList();
 
           return ListView(children: students);
         } else if (snapshot.hasError) {

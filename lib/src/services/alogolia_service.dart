@@ -16,11 +16,7 @@ class AlogoliaService {
 
   AlgoliaIndexReference get _students => _algolia.instance.index('students');
 
-  Future performUpdateStudentsObject(updateData) async {
-    _students.addObject(updateData);
-  }
-
-  Future<String> performUpdateObject(updateData) async {
+  Future<String> performUpdateStudentObject(updateData) async {
     taskUpdated = await _students.object().updateData(updateData);
     return taskUpdated.data['objectID'].toString();
   }
@@ -35,7 +31,7 @@ class AlogoliaService {
     return taskAdded.data['objectID'].toString();
   }
 
-  Future<List<Student>> performProvinceSearch({text: String}) async {
+  Future<List<Student>> performStudentSearch({text: String}) async {
     final query = _students.search(text);
     final snap = await query.getObjects();
     final students =

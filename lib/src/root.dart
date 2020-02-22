@@ -3,6 +3,7 @@ import 'package:nipat/src/pages/home_page/home.dart';
 import 'package:nipat/src/pages/login_page/login_page.dart';
 import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/auth_service.dart';
+import 'package:nipat/src/services/logging_service.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 enum AuthStatus {
@@ -92,8 +93,9 @@ class _RootState extends State<Root> {
             auth: widget.auth,
             logoutCallback: logoutCallback,
           );
-        } else
+        } else {
           return buildWaitingScreen();
+        }
         break;
       default:
         return buildWaitingScreen();

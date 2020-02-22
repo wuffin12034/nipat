@@ -1,75 +1,30 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import '../home_page/home.dart';
-import '../../utils/constant.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
-class EditinsertimagePage extends StatefulWidget {
-  EditinsertimagePage({
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:nipat/src/pages/home_page/home.dart';
+import 'package:nipat/src/utils/constant.dart';
+
+class EditInsertimagePage extends StatefulWidget {
+  final String docID;
+
+  final String studentID;
+  EditInsertimagePage({
     Key key,
     this.docID,
     this.studentID,
   }) : super(key: key);
 
-  final String docID;
-  final String studentID;
-
   @override
-  _EditinsertimagePageState createState() => _EditinsertimagePageState();
+  _EditInsertimagePageState createState() => _EditInsertimagePageState();
 }
 
-class _EditinsertimagePageState extends State<EditinsertimagePage> {
+class _EditInsertimagePageState extends State<EditInsertimagePage> {
   File _image;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-
-  Future getImageFromCam() async {
-    // for camera
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
-    });
-  }
-
-  Future getImageFromGallery() async {
-    // for gallery
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
-    });
-  }
-
-  Future<String> _onImageUploader(File imagePath, String studentId) async {
-    final StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('${studentId}.png');
-    final StorageUploadTask task = firebaseStorageRef.putFile(imagePath);
-    StorageTaskSnapshot storageTaskSnapshot = await task.onComplete;
-    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
-    return downloadUrl;
-  }
-
-  void _submitForm() async {
-    String _imageUrl = await _onImageUploader(_image, widget.studentID);
-
-    if (_imageUrl != null) {
-      await Firestore.instance
-          .collection('students')
-          .document(widget.docID)
-          .updateData({
-        "image": _imageUrl,
-      });
-    }
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return HomePage();
-        },
-      ),
-    );
-  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +50,7 @@ class _EditinsertimagePageState extends State<EditinsertimagePage> {
                           width: 274.0,
                           child: Center(
                             child: _image == null
-                                ? Text('กรุณาเลือกรูปภาพ')
+                                ? const Text('กรุณาเลือกรูปภาพ')
                                 : Image.file(_image),
                           ),
                         ),
@@ -115,6 +70,50 @@ class _EditinsertimagePageState extends State<EditinsertimagePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _submitForm,
         child: Icon(Icons.file_upload),
+      ),
+    );
+  }
+
+  Future getImageFromCam() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  Future getImageFromGallery() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  Future<String> _onImageUploader(File imagePath, String studentId) async {
+    final StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('$studentId.png');
+    final StorageUploadTask task = firebaseStorageRef.putFile(imagePath);
+    StorageTaskSnapshot storageTaskSnapshot = await task.onComplete;
+    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+  void _submitForm() async {
+    String _imageUrl = await _onImageUploader(_image, widget.studentID);
+
+    if (_imageUrl != null) {
+      await Firestore.instance
+          .collection('students')
+          .document(widget.docID)
+          .updateData({
+        "image": _imageUrl,
+      });
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return HomePage();
+        },
       ),
     );
   }

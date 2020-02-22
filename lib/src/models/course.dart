@@ -6,5 +6,10 @@ class Course {
   String description;
   List<Section> sec;
 
-  Course({this.number, this.name, this.description, this.sec});
+  Course({
+    this.number,
+    this.name,
+    this.description,
+    this.sec,
+  });
 }

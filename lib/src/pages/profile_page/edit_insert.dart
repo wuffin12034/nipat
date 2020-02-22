@@ -1,54 +1,25 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:nipat/src/components/widgets.dart';
+import 'package:nipat/src/models/student.dart';
+import 'package:nipat/src/services/alogolia_service.dart';
 import 'package:nipat/src/services/logging_service.dart';
-import '../../utils/constant.dart';
-import '../../models/student.dart';
-import '../../components/widgets.dart';
-import '../../services/alogolia_service.dart';
+import 'package:nipat/src/utils/constant.dart';
 
-class EditinsertPage extends StatefulWidget {
-  @override
-  EditinsertPage({
+class EditInsertPage extends StatefulWidget {
+  final String docID;
+  EditInsertPage({
     Key key,
     this.docID,
   }) : super(key: key);
-  final String docID;
 
-  _EditinsertPageState createState() => _EditinsertPageState();
+  _EditInsertPageState createState() => _EditInsertPageState();
 }
 
-class _EditinsertPageState extends State<EditinsertPage> {
-  Student newStudent = new Student();
+class _EditInsertPageState extends State<EditInsertPage> {
+  Student newStudent = Student();
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-
-  void _submitForm() async {
-    final algoliaService = AlogoliaService.instance;
-    final FormState form = _formKey.currentState;
-    form.save();
-
-    Map<String, dynamic> upData = {
-      "firstName": newStudent.firstName,
-      "lastName": newStudent.lastName,
-      "identificationNumber": newStudent.identificationNumber,
-      "faculty": newStudent.faculty,
-      "department": newStudent.department,
-      "year": newStudent.year,
-      "state": "AWAITING_FOR_IMAGE",
-      "sec": newStudent.sec,
-      "createdAt": '',
-      "updatedAt": DateTime.now().millisecondsSinceEpoch,
-    };
-
-    logger.v(upData);
-
-    await Firestore.instance
-        .collection('students')
-        .document(widget.docID)
-        .updateData(upData);
-    await algoliaService.performUpdateStudentsObject(upData);
-    Navigator.pop(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +48,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.firstName = val,
+                      onSaved: (val) => newStudent.firstName = val.trim(),
                     ),
                     buildSizedBox(13.0),
                     TextFormField(
@@ -89,7 +60,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.lastName = val,
+                      onSaved: (val) => newStudent.lastName = val.trim(),
                     ),
                     buildSizedBox(13.0),
                     TextFormField(
@@ -101,7 +72,8 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.identificationNumber = val,
+                      onSaved: (val) =>
+                          newStudent.identificationNumber = val.trim(),
                     ),
                     buildSizedBox(13.0),
                     TextFormField(
@@ -113,7 +85,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.faculty = val,
+                      onSaved: (val) => newStudent.faculty = val.trim(),
                     ),
                     buildSizedBox(13.0),
                     TextFormField(
@@ -125,7 +97,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.department = val,
+                      onSaved: (val) => newStudent.department = val.trim(),
                     ),
                     buildSizedBox(13.0),
                     TextFormField(
@@ -137,7 +109,7 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.year = val,
+                      onSaved: (val) => newStudent.year = val.trim(),
                     ),
                     buildSizedBox(13.0),
                     TextFormField(
@@ -149,27 +121,27 @@ class _EditinsertPageState extends State<EditinsertPage> {
                           Icons.person,
                         ),
                       ),
-                      onSaved: (val) => newStudent.sec = val,
+                      onSaved: (val) => newStudent.sec = val.trim(),
                     ),
                     buildSizedBox(13.0),
                     Container(
                       height: 50,
                       width: double.infinity,
                       child: RaisedButton(
-                          color: Constant.BG_COLOR,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                        color: Constant.BG_COLOR,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: const Text(
+                          "ยืนยัน",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: Text(
-                            "ยืนยัน",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {
-                            _submitForm();
-                          }),
+                        ),
+                        onPressed: () => _submitForm(),
+                      ),
                     ),
                   ],
                 ),
@@ -177,5 +149,33 @@ class _EditinsertPageState extends State<EditinsertPage> {
             ],
           ),
         ));
+  }
+
+  void _submitForm() async {
+    final algoliaService = AlogoliaService.instance;
+    final FormState form = _formKey.currentState;
+    form.save();
+
+    Map<String, dynamic> upData = {
+      "firstName": newStudent.firstName,
+      "lastName": newStudent.lastName,
+      "identificationNumber": newStudent.identificationNumber,
+      "faculty": newStudent.faculty,
+      "department": newStudent.department,
+      "year": newStudent.year,
+      "state": "AWAITING_FOR_IMAGE",
+      "sec": newStudent.sec,
+      "createdAt": '',
+      "updatedAt": DateTime.now().millisecondsSinceEpoch,
+    };
+
+    logger.v(upData);
+
+    await Firestore.instance
+        .collection('students')
+        .document(widget.docID)
+        .updateData(upData);
+    await algoliaService.performUpdateStudentObject(upData);
+    Navigator.pop(context);
   }
 }

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nipat/src/components/custom_container.dart';
+import 'package:nipat/src/components/widgets.dart';
 import 'package:nipat/src/pages/camera_page/camera.dart';
+import 'package:nipat/src/pages/insert_data_page/insert_info.dart';
+import 'package:nipat/src/pages/profile_page/insert_sec.dart';
+import 'package:nipat/src/pages/profile_page/profile.dart';
 import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/auth_service.dart';
 import 'package:nipat/src/utils/constant.dart';
@@ -32,6 +37,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Widget dataColumn(UserType role, BuildContext context) {
+    switch (role) {
+      case UserType.STUDENT:
+        return studentViewColumn(context);
+      case UserType.TEACHER:
+        return teacherViewColumn(context);
+      case UserType.ADMIN:
+        return Column(
+          children: <Widget>[
+            studentViewColumn(context),
+            teacherViewColumn(context),
+          ],
+        );
+      default:
+        return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<User>(
@@ -48,57 +71,14 @@ class _HomePageState extends State<HomePage> {
                       bottom: 30,
                     ),
                     child: Text(
-                      Constant.APP_NAME,
+                      'Welcome ${widget.userEmail}',
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 20,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  user.role == UserType.ADMIN
-                      ? Container(
-                          height: 120,
-                          width: double.infinity,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              right: 20,
-                              left: 20,
-                            ),
-                            child: RaisedButton(
-                              color: Constant.G_COLOR,
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return CameraPage();
-                                  },
-                                ),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.computer,
-                                    size: 70,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(width: 30),
-                                  Text(
-                                    "กล้อง",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container(),
-                  SizedBox(height: 18),
+                  dataColumn(user.role, context),
                 ],
               ),
             ],
@@ -109,6 +89,86 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
+    );
+  }
+
+  Widget studentViewColumn(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        // add info
+        buildSizedBox(13.0),
+        CustomContainer(
+          text: 'เพิ้มข้อมูลนิสิต',
+          color: Constant.PRIMARY_COLOR,
+          icon: Icons.verified_user,
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => InsertDataPage(),
+            ),
+          ),
+        ),
+        buildSizedBox(13.0),
+        // edit student info
+        CustomContainer(
+          text: 'ดูข้อมูลนิสิต',
+          color: Constant.ORANGE_COLOR,
+          icon: Icons.portrait,
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfilePage(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget teacherViewColumn(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        // add sec
+        buildSizedBox(13.0),
+        CustomContainer(
+          text: 'เพิ่มหมู่เรียน',
+          color: Constant.R_COLOR,
+          icon: Icons.group_add,
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => InsertSecPage(),
+            ),
+          ),
+        ),
+        buildSizedBox(13.0),
+        // view sec
+        CustomContainer(
+          text: 'ดูหมู่เรียน',
+          color: Constant.G_COLOR,
+          icon: Icons.group,
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfilePage(),
+            ),
+          ),
+        ),
+        buildSizedBox(13.0),
+        // qr code scan
+        CustomContainer(
+          text: 'กล้อง',
+          color: Constant.B_COLOR,
+          icon: Icons.camera,
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CameraPage(),
+            ),
+          ),
+        ),
+        buildSizedBox(13.0),
+      ],
     );
   }
 }
