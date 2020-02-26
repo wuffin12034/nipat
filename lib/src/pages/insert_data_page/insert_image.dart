@@ -23,7 +23,7 @@ class InsertImagePage extends StatefulWidget {
 
 class _InsertImagePageState extends State<InsertImagePage> {
   File _image;
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future getImageFromSource(ImageSource source) async {
     var image = await ImagePicker.pickImage(source: source);

@@ -41,7 +41,8 @@ class User extends Model {
     notifyListeners();
   }
 
-  void updateUserToken(String token) {
-    token = token;
+  void updateUserToken(String utoken) {
+    token = utoken;
+    notifyListeners();
   }
 }

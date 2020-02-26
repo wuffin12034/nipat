@@ -4,8 +4,10 @@ import 'package:nipat/src/components/loading_container.dart';
 import 'package:nipat/src/models/student.dart';
 import 'package:nipat/src/pages/profile_page/insert_sec.dart';
 import 'package:nipat/src/pages/profile_page/insert_sec_student.dart';
+import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/alogolia_service.dart';
 import 'package:nipat/src/utils/constant.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final _user = ScopedModel.of<User>(context, rebuildOnChange: true);
     return Scaffold(
       appBar: AppBar(
         title: Text(Constant.PROFILE),
@@ -40,7 +43,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('sec').snapshots(),
+        stream: Firestore.instance
+            .collection('sec')
+            .where('teachId', isEqualTo: _user.token)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {

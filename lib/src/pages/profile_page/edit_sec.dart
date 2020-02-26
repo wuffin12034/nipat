@@ -21,7 +21,7 @@ class EditSecPage extends StatefulWidget {
 class _EditSecPageState extends State<EditSecPage> {
   Section newSec = Section();
 
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
     return Scaffold(

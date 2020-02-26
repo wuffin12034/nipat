@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:nipat/src/components/widgets.dart';
 import 'package:nipat/src/models/section.dart';
 import 'package:nipat/src/pages/home_page/home.dart';
+import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/logging_service.dart';
 import 'package:nipat/src/utils/constant.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class InsertSecPage extends StatefulWidget {
   @override
@@ -13,9 +15,10 @@ class InsertSecPage extends StatefulWidget {
 
 class _InsertSecPageState extends State<InsertSecPage> {
   Section newSec = Section();
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _submitForm() async {
+    final _user = ScopedModel.of<User>(context, rebuildOnChange: true);
     final FormState form = _formKey.currentState;
     form.save();
     if (newSec.number.isNotEmpty) {
@@ -24,6 +27,7 @@ class _InsertSecPageState extends State<InsertSecPage> {
             await Firestore.instance.collection('sec').add(
           {
             "number": newSec.number,
+            "teachId": _user.userToken,
           },
         );
         logger.d(docRef.documentID);

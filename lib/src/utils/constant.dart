@@ -5,7 +5,7 @@ class Constant {
   static const String PROFILE = 'Profile';
   static const String CAMERA = 'Camera';
   static const String REPORT = 'Report';
-  static const String INSERT = 'InsertDataStusent';
+  static const String INSERT = 'InsertDataStudent';
   static const String LOGIN = 'Login';
 
   //color

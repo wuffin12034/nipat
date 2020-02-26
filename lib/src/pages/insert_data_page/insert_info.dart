@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nipat/src/components/widgets.dart';
+import 'package:nipat/src/models/student.dart';
+import 'package:nipat/src/services/alogolia_service.dart';
 import 'package:nipat/src/services/logging_service.dart';
-import '../../utils/constant.dart';
-import '../../models/student.dart';
+import 'package:nipat/src/utils/constant.dart';
 import 'insert_image.dart';
-import '../../components/widgets.dart';
-import '../../services/alogolia_service.dart';
 import 'package:dio/dio.dart';
 
 class InsertDataPage extends StatefulWidget {
@@ -22,7 +22,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
   DocumentReference docRef2;
 
   void _submitForm() async {
-    Dio dio = new Dio();
+    Dio dio = Dio();
     dio.options.headers['content-type'] = 'application/json';
 
     final FormState form = _formKey.currentState;
