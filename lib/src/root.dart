@@ -32,6 +32,7 @@ class _RootState extends State<Root> {
     super.initState();
 
     widget.auth.getCurrentUser().then((user) {
+      user = null;
       setState(() {
         if (user != null) {
           _userId = user?.uid;
@@ -76,6 +77,7 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
+    print(authStatus);
     switch (authStatus) {
       case AuthStatus.NOT_DETERMINED:
         return buildWaitingScreen();

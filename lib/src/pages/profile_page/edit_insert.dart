@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:nipat/src/components/widgets.dart';
 import 'package:nipat/src/models/student.dart';
-import 'package:nipat/src/services/alogolia_service.dart';
 import 'package:nipat/src/services/logging_service.dart';
 import 'package:nipat/src/utils/constant.dart';
 
@@ -170,11 +170,15 @@ class _EditInsertPageState extends State<EditInsertPage> {
   }
 
   void _submitForm() async {
-    final algoliaService = AlogoliaService.instance;
+    Dio dio = Dio();
+    dio.options.headers['content-type'] = 'application/json';
+
     final FormState form = _formKey.currentState;
     form.save();
 
-    Map<String, dynamic> upData = {
+    int date = DateTime.now().millisecondsSinceEpoch;
+
+    Map<String, dynamic> updateData = {
       "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
       "identificationNumber": newStudent.identificationNumber,
@@ -182,18 +186,43 @@ class _EditInsertPageState extends State<EditInsertPage> {
       "department": newStudent.department,
       "year": newStudent.year,
       "state": "AWAITING_FOR_IMAGE",
-      "sec": newStudent.sec,
-      "createdAt": '',
-      "updatedAt": DateTime.now().millisecondsSinceEpoch,
+      "sec": newStudent.sec, //DATE,
+      "updatedAt": date,
     };
 
-    logger.v(upData);
+    logger.v(updateData);
 
-    await Firestore.instance
-        .collection('students')
-        .document(widget.docID)
-        .updateData(upData);
-    await algoliaService.performUpdateStudentObject(upData);
+    try {
+      await Firestore.instance
+          .collection("students")
+          .document(widget.docID)
+          .updateData(updateData);
+    } catch (e) {
+      logger.e(e.toString());
+      return;
+    }
+
+    Map<String, dynamic> qrdata = {
+      "docID": widget.docID,
+      "firstName": newStudent.firstName,
+      "lastName": newStudent.lastName,
+      "identificationNumber": newStudent.identificationNumber,
+      "Check": 'false',
+    };
+
+    var response =
+        await dio.post("https://7b5991dc.ngrok.io/qr_code", data: qrdata);
+
+    try {
+      await Firestore.instance
+          .collection("students")
+          .document(widget.docID)
+          .updateData({"qr_image_url": response.data['imageUrl']});
+    } catch (e) {
+      logger.e(e.toString());
+      return;
+    }
+
     Navigator.pop(context);
   }
 }

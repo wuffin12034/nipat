@@ -43,10 +43,12 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance
-            .collection('sec')
-            .where('teachId', isEqualTo: _user.token)
-            .snapshots(),
+        stream: _user.role == UserType.TEACHER
+            ? Firestore.instance
+                .collection('sec')
+                .where('teachId', isEqualTo: _user.token)
+                .snapshots()
+            : Firestore.instance.collection('sec').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {

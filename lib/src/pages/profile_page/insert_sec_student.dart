@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nipat/src/components/loading_container.dart';
-import 'package:nipat/src/pages/profile_page/edit_insert.dart';
+import 'package:nipat/src/pages/profile_page/student_info.dart';
 import 'package:nipat/src/utils/constant.dart';
 
 class InsertSecStudentPage extends StatefulWidget {
@@ -53,7 +53,7 @@ class _InsertSecStudentPageState extends State<InsertSecStudentPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditInsertPage(
+                          builder: (context) => StudentInfoPage(
                             docID: document.documentID,
                           ),
                         ),
@@ -92,17 +92,6 @@ class _InsertSecStudentPageState extends State<InsertSecStudentPage> {
                 },
               ).toList());
           }
-        },
-      ),
-    );
-  }
-
-  void _submitForm() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return EditInsertPage();
         },
       ),
     );

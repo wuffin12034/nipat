@@ -8,23 +8,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nipat/src/pages/home_page/home.dart';
 import 'package:nipat/src/utils/constant.dart';
 
-class EditInsertimagePage extends StatefulWidget {
+class EditInsertImagePage extends StatefulWidget {
   final String docID;
 
   final String studentID;
-  EditInsertimagePage({
+  EditInsertImagePage({
     Key key,
     this.docID,
     this.studentID,
   }) : super(key: key);
 
   @override
-  _EditInsertimagePageState createState() => _EditInsertimagePageState();
+  _EditInsertImagePageState createState() => _EditInsertImagePageState();
 }
 
-class _EditInsertimagePageState extends State<EditInsertimagePage> {
+class _EditInsertImagePageState extends State<EditInsertImagePage> {
   File _image;
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
     return Scaffold(

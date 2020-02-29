@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nipat/src/components/widgets.dart';
 import 'package:nipat/src/models/student.dart';
+import 'package:nipat/src/pages/insert_data_page/insert_image.dart';
 import 'package:nipat/src/services/alogolia_service.dart';
 import 'package:nipat/src/services/logging_service.dart';
 import 'package:nipat/src/utils/constant.dart';
-import 'insert_image.dart';
 import 'package:dio/dio.dart';
 
 class InsertDataPage extends StatefulWidget {
@@ -28,6 +28,8 @@ class _InsertDataPageState extends State<InsertDataPage> {
     final FormState form = _formKey.currentState;
     form.save();
 
+    int date = DateTime.now().millisecondsSinceEpoch;
+
     Map<String, dynamic> addData = {
       "firstName": newStudent.firstName,
       "lastName": newStudent.lastName,
@@ -37,47 +39,36 @@ class _InsertDataPageState extends State<InsertDataPage> {
       "year": newStudent.year,
       "state": "AWAITING_FOR_IMAGE",
       "sec": newStudent.sec,
-      "createdAt": '', //DATE,
-      "updatedAt": DateTime.now().millisecondsSinceEpoch, //DATE,
+      "createdAt": date, //DATE,
+      "updatedAt": date,
     };
 
     logger.v(addData);
-    Map<String, dynamic> qrdata = {
-      "firstName": newStudent.firstName,
-      "lastName": newStudent.lastName,
-      "identificationNumber": newStudent.identificationNumber,
-      // "faculty": newStudent.faculty,
-      // "department": newStudent.department,
-      // "year": newStudent.year,
-      // "state": "AWAITING_FOR_IMAGE",
-      // "sec": newStudent.sec,
-      // "createdAt": '', //DATE,
-      "Check name": 'มาเรียน',
-      // "updatedAt": DateTime.now().millisecondsSinceEpoch, //DATE,
-    };
-
-    var response =
-        await dio.post("https://e025c042.ngrok.io/qr_code", data: qrdata);
-    print(response.data);
-    logger.v(qrdata);
 
     try {
       docRef = await Firestore.instance.collection('students').add(addData);
-      logger.d(docRef);
+      logger.d(docRef.documentID);
     } catch (e) {
       logger.e(e.toString());
       return;
     }
 
-    Map<String, dynamic> qrStudent = {
-      "student_doce": docRef.documentID,
-      "qr_image_url": response.data['imageUrl'],
+    Map<String, dynamic> qrdata = {
+      "docID": docRef.documentID,
+      "firstName": newStudent.firstName,
+      "lastName": newStudent.lastName,
+      "identificationNumber": newStudent.identificationNumber,
+      "Check": 'false',
     };
 
+    var response =
+        await dio.post("https://7b5991dc.ngrok.io/qr_code", data: qrdata);
+
     try {
-      docRef2 =
-          await Firestore.instance.collection('qrstudents').add(qrStudent);
-      logger.v(docRef2);
+      await Firestore.instance
+          .collection("students")
+          .document(docRef.documentID)
+          .updateData({"qr_image_url": response.data['imageUrl']});
     } catch (e) {
       logger.e(e.toString());
       return;

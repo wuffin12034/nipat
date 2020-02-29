@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nipat/src/models/section.dart';
 import 'package:nipat/src/utils/constant.dart';
@@ -46,16 +45,5 @@ class _EditSecPageState extends State<EditSecPage> {
         ),
       ),
     );
-  }
-
-  void _submitForm(docID) async {
-    final FormState form = _formKey.currentState;
-    form.save();
-
-    await Firestore.instance
-        .collection('students')
-        .document(docID)
-        .updateData({"sec": newSec.number});
-    Navigator.pop(context);
   }
 }
