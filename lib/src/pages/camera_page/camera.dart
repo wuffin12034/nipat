@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nipat/src/components/custom_container.dart';
@@ -27,7 +29,7 @@ class _CameraPageState extends State<CameraPage> {
             width: MediaQuery.of(context).size.width,
             height: 200.0,
             child: Center(
-              child: Text(readText),
+              child: Text(readText ?? '-'),
             ),
           ),
           CustomContainer(
@@ -60,7 +62,9 @@ class _CameraPageState extends State<CameraPage> {
 
     futureString.then(
       (text) => setState(() {
-        readText = text;
+        final body = json.decode(text);
+        print(body['identificationNumber']);
+        readText = body['identificationNumber'];
       }),
     );
   }
