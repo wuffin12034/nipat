@@ -89,7 +89,7 @@ class _InsertDataPageState extends State<InsertDataPage> {
         ),
       );
     } else {
-      print('error');
+      logger.e('error');
     }
   }
 

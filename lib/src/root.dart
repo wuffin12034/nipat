@@ -77,7 +77,6 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
-    print(authStatus);
     switch (authStatus) {
       case AuthStatus.NOT_DETERMINED:
         return buildWaitingScreen();

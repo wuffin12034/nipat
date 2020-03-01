@@ -7,6 +7,7 @@ import 'package:nipat/src/pages/profile_page/insert_sec.dart';
 import 'package:nipat/src/pages/profile_page/profile.dart';
 import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/auth_service.dart';
+import 'package:nipat/src/services/logging_service.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       await widget.auth.signOut();
       widget.logoutCallback();
     } catch (e) {
-      print(e.toString());
+      logger.e(e.toString());
     }
   }
 

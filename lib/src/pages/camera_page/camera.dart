@@ -74,7 +74,6 @@ class _CameraPageState extends State<CameraPage> {
           .snapshots()
           .listen(
         (data) {
-          print(data.documents[0].documentID);
           Firestore.instance
               .collection('students')
               .document(data.documents[0].documentID)
