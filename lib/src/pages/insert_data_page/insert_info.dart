@@ -61,8 +61,10 @@ class _InsertDataPageState extends State<InsertDataPage> {
       "Check": 'false',
     };
 
-    var response =
-        await dio.post("https://7b5991dc.ngrok.io/qr_code", data: qrdata);
+    var response = await dio.post(
+      "https://qrcode-6fv5wxprvq-uc.a.run.app/qr_code",
+      data: qrdata,
+    );
 
     try {
       await Firestore.instance
