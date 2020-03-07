@@ -129,7 +129,6 @@ class _HomePageState extends State<HomePage> {
   Widget teacherViewColumn(BuildContext context) {
     return Column(
       children: <Widget>[
-        // add sec
         buildSizedBox(13.0),
         CustomContainer(
           text: 'เพิ่มหมู่เรียน',
@@ -143,7 +142,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         buildSizedBox(13.0),
-        // view sec
         CustomContainer(
           text: 'ดูหมู่เรียน',
           color: Constant.G_COLOR,
@@ -155,20 +153,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        buildSizedBox(13.0),
-        // qr code scan
-        CustomContainer(
-          text: 'กล้อง',
-          color: Constant.B_COLOR,
-          icon: Icons.camera,
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CameraPage(),
-            ),
-          ),
-        ),
-        buildSizedBox(13.0),
+        buildSizedBox(20.0),
       ],
     );
   }

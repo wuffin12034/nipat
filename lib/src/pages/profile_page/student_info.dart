@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nipat/src/pages/profile_page/edit_insert.dart';
+import 'package:nipat/src/pages/profile_page/student_sec_info.dart';
+import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/utils/constant.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class StudentInfoPage extends StatefulWidget {
   final String docID;
@@ -16,6 +19,7 @@ class StudentInfoPage extends StatefulWidget {
 class _StudentInfoPageState extends State<StudentInfoPage> {
   @override
   Widget build(BuildContext context) {
+    final _user = ScopedModel.of<User>(context, rebuildOnChange: true);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.docID),
@@ -64,7 +68,9 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                                     );
                                   },
                                 )
-                              : Center(child: Text('No Image')),
+                              : Center(
+                                  child: Text('No Image'),
+                                ),
                         ),
                       ),
                       Container(
@@ -196,9 +202,42 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                                     );
                                   },
                                 )
-                              : Center(child: Text('No Image')),
+                              : Center(
+                                  child: Text('No Image'),
+                                ),
                         ),
                       ),
+                      _user.role != UserType.STUDENT
+                          ? Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width - 15,
+                              child: RaisedButton(
+                                color: Constant.BG_COLOR,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Text(
+                                  'Checkins',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () => Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StudentSecInfoPage(
+                                      numbersec: snapshot.data['sec'],
+                                      docID: widget.docID,
+                                      studerntID:
+                                          snapshot.data['identificationNumber'],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(),
                       Container(
                         height: 50,
                         width: MediaQuery.of(context).size.width - 15,

@@ -8,6 +8,9 @@ import 'package:nipat/src/utils/constant.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 
 class CameraPage extends StatefulWidget {
+  final String numbSec;
+
+  const CameraPage({Key key, this.numbSec}) : super(key: key);
   @override
   _CameraPageState createState() => _CameraPageState();
 }
@@ -44,20 +47,20 @@ class _CameraPageState extends State<CameraPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => qrScan(),
+        onPressed: () => _qrScan(),
         tooltip: 'Scan QR',
         child: Icon(Icons.camera_front),
       ),
     );
   }
 
-  Future qrScan() async {
+  Future _qrScan() async {
     Future<String> futureString = QRCodeReader()
-        .setAutoFocusIntervalInMs(200) // default 5000
-        .setForceAutoFocus(true) // default false
-        .setTorchEnabled(true) // default false
-        .setHandlePermissions(true) // default true
-        .setExecuteAfterPermissionGranted(true) // default true
+        .setAutoFocusIntervalInMs(200)
+        .setForceAutoFocus(true)
+        .setTorchEnabled(true)
+        .setHandlePermissions(true)
+        .setExecuteAfterPermissionGranted(true)
         .scan();
 
     futureString.then(
@@ -70,6 +73,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<bool> sendToCheck(String identification) async {
+    print(identification);
     if (identification.isEmpty) return false;
     try {
       Firestore.instance
@@ -77,13 +81,17 @@ class _CameraPageState extends State<CameraPage> {
           .where('identificationNumber', isEqualTo: identification)
           .snapshots()
           .listen(
-        (data) {
-          Firestore.instance
-              .collection('students')
-              .document(data.documents[0].documentID)
-              .updateData(
+        (data) async {
+          await Firestore.instance
+              .collection('students_time_check')
+              .document()
+              .setData(
             {
+              'docId': data.documents[0].documentID,
+              'studentId': identification,
+              'sec': widget.numbSec,
               'cheked': true,
+              'date': DateTime.now().toIso8601String(),
             },
           );
         },
