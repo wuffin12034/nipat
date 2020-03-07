@@ -33,15 +33,18 @@ class _InsertSecStudentPageState extends State<InsertSecStudentPage> {
         centerTitle: true,
         backgroundColor: Constant.BG_COLOR,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.camera_front),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CameraPage(numbSec: widget.numbersec),
-              ),
-            ),
-          ),
+          _user.role != UserType.STUDENT
+              ? IconButton(
+                  icon: Icon(Icons.camera_front),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          CameraPage(numbSec: widget.numbersec),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
