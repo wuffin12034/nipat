@@ -90,7 +90,7 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    Icon(Icons.store),
+                                    Icon(Icons.group),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -110,7 +110,7 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                                   ),
                                 ),
                                 const Text(
-                                  "ที่อยู่",
+                                  "หรัสนิสิต",
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -118,7 +118,7 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    Icon(Icons.perm_contact_calendar),
+                                    Icon(Icons.group),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -141,15 +141,24 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                                   ),
                                 ),
                                 const Text(
-                                  "รายละเอียด",
+                                  "สาขา",
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5,
+                                    bottom: 5,
+                                  ),
+                                  child: Divider(
+                                    height: 2,
+                                  ),
+                                ),
                                 Row(
                                   children: <Widget>[
-                                    Icon(Icons.access_time),
+                                    Icon(Icons.group),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -158,14 +167,75 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                                     ),
                                   ],
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5,
+                                    bottom: 5,
+                                  ),
+                                  child: Divider(
+                                    height: 2,
+                                  ),
+                                ),
+                                const Text(
+                                  "คณะ",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5,
+                                    bottom: 5,
+                                  ),
+                                  child: Divider(
+                                    height: 2,
+                                  ),
+                                ),
                                 Row(
                                   children: <Widget>[
-                                    Icon(Icons.access_time),
+                                    Icon(Icons.group),
                                     SizedBox(
                                       width: 5,
                                     ),
                                     Text(
                                       snapshot.data['department'] ?? '-',
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5,
+                                    bottom: 5,
+                                  ),
+                                  child: Divider(
+                                    height: 2,
+                                  ),
+                                ),
+                                const Text(
+                                  "หมู่เรียน",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5,
+                                    bottom: 5,
+                                  ),
+                                  child: Divider(
+                                    height: 2,
+                                  ),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(Icons.group),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      snapshot.data['sec'] ?? '-',
                                     ),
                                   ],
                                 ),

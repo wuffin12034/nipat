@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         // add info
         buildSizedBox(13.0),
         CustomContainer(
-          text: 'เพิ้มข้อมูลนิสิต',
+          text: 'เพิ่มข้อมูลนิสิต',
           color: Constant.PRIMARY_COLOR,
           icon: Icons.verified_user,
           onPressed: () => Navigator.push(

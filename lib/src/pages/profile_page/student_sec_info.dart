@@ -50,6 +50,11 @@ class _InsertSecStudentPageState extends State<StudentSecInfoPage> {
                         child: Column(
                           children: [
                             Text(
+                              "วัน/เดือน:"
+                              "${parsedDate.day.toString()}/${parsedDate.month.toString()}/${parsedDate.year.toString()}",
+                            ),
+                            Text(
+                              "เวลา"
                               "${parsedDate.hour.toString()}:${parsedDate.minute.toString()}",
                             ),
                           ],
