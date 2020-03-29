@@ -8,7 +8,6 @@ import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/auth_service.dart';
 import 'package:nipat/src/services/logging_service.dart';
 import 'package:nipat/src/theme/app_theme.dart';
-import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -99,7 +98,7 @@ class _HomePageState extends State<HomePage> {
         // add info
         buildSizedBox(13.0),
         CustomContainer(
-          text: 'เพิ้มข้อมูลนิสิต',
+          text: 'เพิ่มข้อมูลนิสิต',
           color: AppTheme.PRIMARY_COLOR,
           icon: Icons.verified_user,
           onPressed: () => Navigator.push(
