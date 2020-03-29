@@ -5,6 +5,7 @@ import 'package:nipat/src/models/section.dart';
 import 'package:nipat/src/pages/home_page/home.dart';
 import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/logging_service.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -51,7 +52,7 @@ class _InsertSecPageState extends State<InsertSecPage> {
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
       ),
       body: Form(
         key: _formKey,
@@ -79,7 +80,7 @@ class _InsertSecPageState extends State<InsertSecPage> {
                     height: 50,
                     width: double.infinity,
                     child: RaisedButton(
-                      color: Constant.BG_COLOR,
+                      color: AppTheme.BG_COLOR,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),

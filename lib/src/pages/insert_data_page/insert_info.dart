@@ -5,6 +5,7 @@ import 'package:nipat/src/models/student.dart';
 import 'package:nipat/src/pages/insert_data_page/insert_image.dart';
 import 'package:nipat/src/services/alogolia_service.dart';
 import 'package:nipat/src/services/logging_service.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:dio/dio.dart';
 
@@ -19,9 +20,9 @@ class _InsertDataPageState extends State<InsertDataPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DocumentReference docRef;
-  DocumentReference docRef2;
+  // DocumentReference docRef2;
 
-  void _submitForm() async {
+  void submitData() async {
     Dio dio = Dio();
     dio.options.headers['content-type'] = 'application/json';
 
@@ -39,38 +40,12 @@ class _InsertDataPageState extends State<InsertDataPage> {
       "year": newStudent.year,
       "state": "AWAITING_FOR_IMAGE",
       "sec": newStudent.sec,
-      "createdAt": date, //DATE,
+      "createdAt": date,
       "updatedAt": date,
     };
 
-    logger.v(addData);
-
     try {
       docRef = await Firestore.instance.collection('students').add(addData);
-      logger.d(docRef.documentID);
-    } catch (e) {
-      logger.e(e.toString());
-      return;
-    }
-
-    Map<String, dynamic> qrdata = {
-      "docID": docRef.documentID,
-      "firstName": newStudent.firstName,
-      "lastName": newStudent.lastName,
-      "identificationNumber": newStudent.identificationNumber,
-      "Check": 'false',
-    };
-
-    var response = await dio.post(
-      "https://qrcode-6fv5wxprvq-uc.a.run.app/qr_code",
-      data: qrdata,
-    );
-
-    try {
-      await Firestore.instance
-          .collection("students")
-          .document(docRef.documentID)
-          .updateData({"qr_image_url": response.data['imageUrl']});
     } catch (e) {
       logger.e(e.toString());
       return;
@@ -95,13 +70,41 @@ class _InsertDataPageState extends State<InsertDataPage> {
     }
   }
 
+  // void qrCodeGenerate(String docID) async {
+  //   Dio dio = Dio();
+  //   dio.options.headers['content-type'] = 'application/json';
+
+  //   Map<String, dynamic> qrdata = {
+  //     "docID": docRef.documentID,
+  //     "firstName": newStudent.firstName,
+  //     "lastName": newStudent.lastName,
+  //     "identificationNumber": newStudent.identificationNumber,
+  //     "scanBefore": 'false',
+  //   };
+
+  //   var response = await dio.post(
+  //     "https://qrcode-6fv5wxprvq-uc.a.run.app/qr_code",
+  //     data: qrdata,
+  //   );
+
+  //   try {
+  //     await Firestore.instance
+  //         .collection("students")
+  //         .document(docRef.documentID)
+  //         .updateData({"qr_image_url": response.data['imageUrl']});
+  //   } catch (e) {
+  //     logger.e(e.toString());
+  //     return;
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
       ),
       body: Form(
         key: _formKey,
@@ -201,21 +204,20 @@ class _InsertDataPageState extends State<InsertDataPage> {
                     height: 50,
                     width: double.infinity,
                     child: RaisedButton(
-                        color: Constant.BG_COLOR,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                      color: AppTheme.BG_COLOR,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        "ยืนยัน",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                        child: Text(
-                          "ยืนยัน",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onPressed: () {
-                          _submitForm();
-                        }),
+                      ),
+                      onPressed: () => submitData(),
+                    ),
                   ),
                 ],
               ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nipat/src/models/section.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 
 class EditSecPage extends StatefulWidget {
   final String numbersec;
   final String docID;
   final String studerntID;
+
   EditSecPage({
     Key key,
     this.numbersec,
@@ -27,7 +29,7 @@ class _EditSecPageState extends State<EditSecPage> {
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
       ),
       body: Form(
         key: _formKey,

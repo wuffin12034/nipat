@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nipat/src/components/widgets.dart';
 import 'package:nipat/src/models/student.dart';
 import 'package:nipat/src/services/logging_service.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 
 class EditInsertPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _EditInsertPageState extends State<EditInsertPage> {
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
       ),
       body: StreamBuilder(
         stream: Firestore.instance
@@ -143,7 +144,7 @@ class _EditInsertPageState extends State<EditInsertPage> {
                         height: 50,
                         width: double.infinity,
                         child: RaisedButton(
-                          color: Constant.BG_COLOR,
+                          color: AppTheme.BG_COLOR,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),

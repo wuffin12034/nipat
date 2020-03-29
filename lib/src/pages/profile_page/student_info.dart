@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nipat/src/pages/profile_page/edit_insert.dart';
 import 'package:nipat/src/pages/profile_page/student_sec_info.dart';
 import 'package:nipat/src/scoped_models/user.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -24,7 +25,7 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
       appBar: AppBar(
         title: Text(widget.docID),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
       ),
       body: StreamBuilder(
         stream: Firestore.instance
@@ -212,7 +213,7 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                               height: 50,
                               width: MediaQuery.of(context).size.width - 15,
                               child: RaisedButton(
-                                color: Constant.BG_COLOR,
+                                color: AppTheme.BG_COLOR,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
@@ -242,7 +243,7 @@ class _StudentInfoPageState extends State<StudentInfoPage> {
                         height: 50,
                         width: MediaQuery.of(context).size.width - 15,
                         child: RaisedButton(
-                          color: Constant.BG_COLOR,
+                          color: AppTheme.BG_COLOR,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),

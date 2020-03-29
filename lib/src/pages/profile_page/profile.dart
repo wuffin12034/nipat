@@ -6,6 +6,7 @@ import 'package:nipat/src/pages/profile_page/insert_sec.dart';
 import 'package:nipat/src/pages/profile_page/insert_sec_student.dart';
 import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/alogolia_service.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -22,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: Text(Constant.PROFILE),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -67,16 +68,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         Icons.keyboard_arrow_right,
                         color: Colors.black,
                       ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => InsertSecStudentPage(
-                              numbersec: document['number'],
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InsertSecStudentPage(
+                            numbersec: document['number'],
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     );
                   },
                 ).toList(),

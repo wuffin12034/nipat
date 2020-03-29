@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nipat/src/components/custom_container.dart';
 import 'package:nipat/src/components/widgets.dart';
-import 'package:nipat/src/pages/camera_page/camera.dart';
 import 'package:nipat/src/pages/insert_data_page/insert_info.dart';
 import 'package:nipat/src/pages/profile_page/insert_sec.dart';
 import 'package:nipat/src/pages/profile_page/profile.dart';
 import 'package:nipat/src/scoped_models/user.dart';
 import 'package:nipat/src/services/auth_service.dart';
 import 'package:nipat/src/services/logging_service.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         buildSizedBox(13.0),
         CustomContainer(
           text: 'เพิ้มข้อมูลนิสิต',
-          color: Constant.PRIMARY_COLOR,
+          color: AppTheme.PRIMARY_COLOR,
           icon: Icons.verified_user,
           onPressed: () => Navigator.push(
             context,
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
         // edit student info
         CustomContainer(
           text: 'ดูข้อมูลนิสิต',
-          color: Constant.ORANGE_COLOR,
+          color: AppTheme.ORANGE_COLOR,
           icon: Icons.portrait,
           onPressed: () => Navigator.push(
             context,
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
         buildSizedBox(13.0),
         CustomContainer(
           text: 'เพิ่มหมู่เรียน',
-          color: Constant.R_COLOR,
+          color: AppTheme.R_COLOR,
           icon: Icons.group_add,
           onPressed: () => Navigator.push(
             context,
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
         buildSizedBox(13.0),
         CustomContainer(
           text: 'ดูหมู่เรียน',
-          color: Constant.G_COLOR,
+          color: AppTheme.G_COLOR,
           icon: Icons.group,
           onPressed: () => Navigator.push(
             context,

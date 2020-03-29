@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nipat/src/components/loading_container.dart';
-import 'package:nipat/src/utils/constant.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 
 class StudentSecInfoPage extends StatefulWidget {
   final String numbersec;
@@ -25,7 +25,7 @@ class _InsertSecStudentPageState extends State<StudentSecInfoPage> {
       appBar: AppBar(
         title: Text('Checkins'),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance

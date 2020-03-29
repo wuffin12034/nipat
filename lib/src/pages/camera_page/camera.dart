@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nipat/src/components/custom_container.dart';
 import 'package:nipat/src/services/logging_service.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 
@@ -24,7 +25,7 @@ class _CameraPageState extends State<CameraPage> {
       appBar: AppBar(
         title: Text(Constant.CAMERA),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
       ),
       body: Column(
         children: <Widget>[
@@ -37,7 +38,7 @@ class _CameraPageState extends State<CameraPage> {
           ),
           CustomContainer(
             text: 'Check',
-            color: Constant.BG_COLOR,
+            color: AppTheme.BG_COLOR,
             icon: Icons.check,
             onPressed: () async {
               bool done = await sendToCheck(readText);
@@ -66,14 +67,12 @@ class _CameraPageState extends State<CameraPage> {
     futureString.then(
       (text) => setState(() {
         final body = json.decode(text);
-        print(body['identificationNumber']);
         readText = body['identificationNumber'];
       }),
     );
   }
 
   Future<bool> sendToCheck(String identification) async {
-    print(identification);
     if (identification.isEmpty) return false;
     try {
       Firestore.instance

@@ -4,14 +4,15 @@ import 'package:nipat/src/components/loading_container.dart';
 import 'package:nipat/src/pages/camera_page/camera.dart';
 import 'package:nipat/src/pages/profile_page/student_info.dart';
 import 'package:nipat/src/scoped_models/user.dart';
+import 'package:nipat/src/theme/app_theme.dart';
 import 'package:nipat/src/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class InsertSecStudentPage extends StatefulWidget {
   final String numbersec;
-
   final String docID;
   final String studerntID;
+
   InsertSecStudentPage({
     Key key,
     this.numbersec,
@@ -31,7 +32,7 @@ class _InsertSecStudentPageState extends State<InsertSecStudentPage> {
       appBar: AppBar(
         title: Text(Constant.INSERT),
         centerTitle: true,
-        backgroundColor: Constant.BG_COLOR,
+        backgroundColor: AppTheme.BG_COLOR,
         actions: <Widget>[
           _user.role != UserType.STUDENT
               ? IconButton(
@@ -53,10 +54,6 @@ class _InsertSecStudentPageState extends State<InsertSecStudentPage> {
                 .collection('students_time_check')
                 .where('sec', isEqualTo: widget.numbersec)
                 .where('cheked', isEqualTo: true)
-                // .where(
-                //   "date",
-                //   isLessThanOrEqualTo: DateTime.now().toIso8601String(),
-                // )
                 .snapshots()
             : Firestore.instance
                 .collection('students')
